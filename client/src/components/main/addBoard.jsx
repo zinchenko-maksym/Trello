@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {addBoard} from '../../action'
+import {addBoard, loadAddPlaces} from '../../action'
 
 class AddBoard extends Component {
 	constructor(props)  {
@@ -14,7 +14,7 @@ class AddBoard extends Component {
 
    handleBaordNameChange(e){
      this.setState({boardName: e.target.value});
-     console.log(this.state.boardName)
+     
   }
   render() {
     return (
@@ -36,7 +36,7 @@ export default connect(
      dispatch => ({
 
         onAddBoard: (placeNum)=> {
-          
+          dispatch(loadAddPlaces());
          dispatch(addBoard(placeNum));
        }
      })

@@ -1,38 +1,24 @@
 export const addBoard = (payload) => {
   return {type: "ADD_BOARD", payload}
 }
-
-/*
-
-export const onCleanPlaces = () => {
-
-  return (dispatch) => {
-    
-    fetch('/drop')
-    .then(()=>{
-      return dispatch(cleanPlaces());
-    });
-  }
-};
+export const addBoardsArray = (payload) => {
+  return {type: "ADD_BOARDS_ARRAY", payload}
+}
 
 export const loadAddPlaces = () => {
-
   return (dispatch) => {
-    
+     console.log("vse ok")
     fetch('/ok')
       .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{
-      let arr=[];
-      
-      cb.map((value)=>{        
-        arr = arr.concat(value.pl);
-        return arr;
-      })
-      return dispatch(shiftPlaces(arr));
+      console.log("sfasf")
+      return 0;
     });
   }
 };
+
+
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     
@@ -44,7 +30,7 @@ function checkStatus(response) {
   console.log(error);
   throw error;
 }
-
+/*
 export const sendPlacesToServer = (places)=> {
   
   let arrOfPlaces= '[';

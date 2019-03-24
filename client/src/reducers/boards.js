@@ -8,6 +8,9 @@ const boards = (state = initialState, action) => {
         ...state,
         action.payload
       ];
+    case 'ADD_BOARD':
+      return
+      	state.concat(action.payload);
     default:
       return state
   }
