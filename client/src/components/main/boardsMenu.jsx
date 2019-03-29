@@ -13,7 +13,7 @@ class BoardsMenu extends Component {
 		let boardsArr=this.props.myStore.boards
 		let arr=[];
 		for (var i = 0; i <=boardsArr.length - 1; i++) {
-			arr.push(<Board key={boardsArr[i]} name={boardsArr[i]}/>)
+			arr.push(<Board key={boardsArr[i].boardName} name={boardsArr[i].boardName}/>)
 		}
 		return arr
 	}

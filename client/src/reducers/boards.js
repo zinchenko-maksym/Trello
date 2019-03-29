@@ -1,4 +1,4 @@
-const initialState = ["asdf","two"]
+const initialState = [{boardName:"asdf"}]
 
 
 const boards = (state = initialState, action) => {
@@ -8,9 +8,12 @@ const boards = (state = initialState, action) => {
         ...state,
         action.payload
       ];
-    case 'ADD_BOARD':
-      return
-      	state.concat(action.payload);
+    case 'ADD_BOARDS_ARRAY':
+      return [
+          ...state,
+          ...action.payload
+      ]
+      	
     default:
       return state
   }

@@ -5,15 +5,22 @@ export const addBoardsArray = (payload) => {
   return {type: "ADD_BOARDS_ARRAY", payload}
 }
 
-export const loadAddPlaces = () => {
+export const sendBoardToServer = (data) => {
+
   return (dispatch) => {
-     console.log("vse ok")
-    fetch('/ok')
-      .then((res)=>checkStatus(res))
+     
+    fetch('/ok', {
+      method: "POST",
+      headers:{
+        'Accept': 'application/json, text/plain',
+        'Content-type':'application/json'
+      },
+      body: JSON.stringify(data)
+    })
     .then((res)=>res.json())
     .then((cb)=>{
-      console.log("sfasf")
-      return 0;
+      console.log(cb)
+      return dispatch(addBoard(cb));
     });
   }
 };
@@ -21,7 +28,6 @@ export const loadAddPlaces = () => {
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
-    
     return response;
   }
   const error = new Error(`HTTP Error ${response.statusText}`);
