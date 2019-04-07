@@ -1,14 +1,14 @@
-const initialState = []
+const initialState = [{cardName:"ss"}, {cardName:"saads"}]
 
 
-const boards = (state = initialState, action) => {
+const cards = (state = initialState, action) => {
 	switch (action.type) {
-    case 'ADD_BOARD':
+    case 'ADD_CARD':
       return[
         ...state,
         action.payload
       ];
-    case 'ADD_BOARDS_ARRAY':
+    case 'ADD_CARD_ARRAY':
       return [
           ...state,
           ...action.payload
@@ -19,4 +19,4 @@ const boards = (state = initialState, action) => {
   }
 }
 
-export default boards
+export default cards

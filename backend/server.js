@@ -13,9 +13,8 @@ app.get('/ok', (req, res) => {
 });
 app.post('/ok', (req, res) => {
 
-  const customers = [{boardName:"asddasddf"},{boardName:"three"}];
-  console.log(JSON.stringify(req.body));
-  console.log(JSON.stringify(customers));
+
+  
   res.send(req.body);
 });
 

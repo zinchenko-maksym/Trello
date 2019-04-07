@@ -4,7 +4,12 @@ export const addBoard = (payload) => {
 export const addBoardsArray = (payload) => {
   return {type: "ADD_BOARDS_ARRAY", payload}
 }
-
+export const addCard = (payload) => {
+  return {type: "ADD_CARD", payload}
+}
+export const addCardsArray = (payload) => {
+  return {type: "ADD_CARDS_ARRAY", payload}
+}
 export const sendBoardToServer = (data) => {
 
   return (dispatch) => {
@@ -21,6 +26,37 @@ export const sendBoardToServer = (data) => {
     .then((cb)=>{
       console.log(cb)
       return dispatch(addBoard(cb));
+    });
+  }
+};
+export const sendCardToServer = (data) => {
+
+  return (dispatch) => {
+     
+    fetch('/ok', {
+      method: "POST",
+      headers:{
+        'Accept': 'application/json, text/plain',
+        'Content-type':'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then((res)=>res.json())
+    .then((cb)=>{
+      console.log(cb)
+      return dispatch(addCard(cb));
+    });
+  }
+};
+export const requestBoardsList = (data) => {
+
+  return (dispatch) => {
+     
+    fetch('/ok')
+    .then((res)=>res.json())
+    .then((cb)=>{
+      console.log(cb)
+      return dispatch(addBoardsArray(cb));
     });
   }
 };

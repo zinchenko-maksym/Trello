@@ -1,3 +1,4 @@
+//Board page
 .boards-menu
 	display: -webkit-flex
 	display: -moz-flex
@@ -17,7 +18,35 @@
 	background-color: #459
 	height: 100px
 	margin: 10px
+
 .boards-list
+	display: -webkit-flex
+	display: -moz-flex
+	display: -ms-flex
+	display: -o-flex
+	display: flex
+	flex-flow: row wrap
+
+
+	&__item
+		display: -webkit-flex
+		display: -moz-flex
+		display: -ms-flex
+		display: -o-flex
+		display: flex
+		align-items: center
+		justify-content: space-around
+		height: 100px
+		width: 200px
+		flex-grow: 1
+		flex: none
+		background-color: green
+		margin: 10px
+
+
+
+//List page
+.lists-menu
 	display: -webkit-flex
 	display: -moz-flex
 	display: -ms-flex
@@ -34,9 +63,51 @@
 		display: flex
 		align-items: center
 		justify-content: space-around
-		height: 100px
+		
 		width: 200px
 		flex-grow: 1
 		flex: none
 		background-color: green
 		margin: 10px
+		
+.add-list
+	display: -webkit-flex
+	display: -moz-flex
+	display: -ms-flex
+	display: -o-flex
+	display: flex
+	width: 200px	
+	background-color: #459
+	margin: 10px
+	flex-flow: row wrap
+	&__item
+		width: 100%
+
+
+.list
+	display: -webkit-flex
+	display: -moz-flex
+	display: -ms-flex
+	display: -o-flex
+	display: flex
+	flex-flow: row wrap
+
+
+	&__item
+		display: -webkit-flex
+		display: -moz-flex
+		display: -ms-flex
+		display: -o-flex
+		display: flex
+		align-items: center
+		justify-content: space-around
+		
+		width: 200px
+		flex-grow: 1
+		flex: none
+		background-color: green
+		margin: 10px
+.add-card
+	display: flex
+	width: 200px
+		

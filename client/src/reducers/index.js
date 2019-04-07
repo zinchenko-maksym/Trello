@@ -2,10 +2,11 @@ import { combineReducers } from 'redux'
 
 
 import boards from './boards'
-
+import cards from './cards'
 
 const combReducers = combineReducers({
-	boards
+	boards,
+	cards
 })
 
 export default combReducers

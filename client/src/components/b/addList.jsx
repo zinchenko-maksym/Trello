@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {sendBoardToServer} from '../../action'
 
-class AddBoard extends Component {
+class AddList extends Component {
 	constructor(props)  {
     	super();
       this.state= {
@@ -17,10 +17,10 @@ class AddBoard extends Component {
   }
   render() {
     return (
-	    <div  className="add-board boards-menu__item">
-          <p>Create new board...</p>
-          <div >
-	    	    <input type="text" value={this.state.nameOfBoard} onChange={this.handleBaordNameChange}/>
+	    <div  className="add-list lists-menu__item">
+          <p className="add-list__item add-list-title">Create new list...</p>
+          <div className="add-list__item">
+	    	    <input  type="text" value={this.state.nameOfBoard} onChange={this.handleBaordNameChange}/>
             <button onClick={()=>this.props.onAddBoard(this.state.nameOfBoard)}>Submit</button>
           </div>
 	    </div>
@@ -38,5 +38,5 @@ export default connect(
           dispatch(sendBoardToServer({boardName : bn}));
        }
      })
-     )(AddBoard);
+     )(AddList);
 

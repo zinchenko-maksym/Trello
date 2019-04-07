@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
+import ListsMenu from './listsMenu';
 
-
-class BoardsPage extends Component {
+class ListsPage extends Component {
   render() {
     return (
       <div className="BoardsPage">
-        dfghjkl;lkjhgfd
+      	<ListsMenu/>
       </div>
     );
   }
 }
 
-export default BoardsPage;
+export default ListsPage;
