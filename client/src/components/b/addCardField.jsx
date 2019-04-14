@@ -6,18 +6,18 @@ class AddCardField extends Component {
 	constructor(props)  {
    		super();
       	this.state= {
-        	nameOfBoard: ""
+        	nameOfCard: ""
       	};
       	this.handleCardNameChange=this.handleCardNameChange.bind(this);
   	}
   	handleCardNameChange(e){
-     this.setState({nameOfBoard: e.target.value});
+     this.setState({nameOfCard: e.target.value});
   }
   render() {
     return (
       	<div className="add-card-field" >
-          	<input type="text" value={this.state.nameOfBoard} onChange={this.handleCardNameChange}/>
-          	<button onClick={()=>this.props.onAddCard(this.state.nameOfBoard)}>OK</button>
+          	<input type="text" value={this.state.nameOfCard} onChange={this.handleCardNameChange}/>
+          	<button onClick={()=>this.props.onAddCard(this.state.nameOfCard, this.props.listName)}>OK</button>
        	</div>
     );
   }
@@ -29,8 +29,8 @@ export default connect(
      }),
      dispatch => ({
 
-        onAddCard: (cn)=> {
-          dispatch(sendCardToServer({cardName : cn}));
+        onAddCard: (cn, ln)=> {
+          dispatch(sendCardToServer({cardName : cn, listName:ln}));
        }
      })
      )(AddCardField);

@@ -10,11 +10,17 @@ export const addCard = (payload) => {
 export const addCardsArray = (payload) => {
   return {type: "ADD_CARDS_ARRAY", payload}
 }
-export const sendBoardToServer = (data) => {
+export const addList = (payload) => {
+  return {type: "ADD_LIST", payload}
+}
+export const addListsArray = (payload) => {
+  return {type: "ADD_LISTS_ARRAY", payload}
+}
 
+export const sendBoardToServer = (data) => {
   return (dispatch) => {
-     
-    fetch('/ok', {
+     console.log(data)
+    fetch('/boards', {
       method: "POST",
       headers:{
         'Accept': 'application/json, text/plain',
@@ -22,18 +28,36 @@ export const sendBoardToServer = (data) => {
       },
       body: JSON.stringify(data)
     })
+    .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{
       console.log(cb)
-      return dispatch(addBoard(cb));
+      return dispatch(addBoard(cb.boards));
+    });
+  }
+};
+export const sendListToServer = (data) => {
+  return (dispatch) => {
+     
+    fetch('/cardList/newList', {
+      method: "POST",
+      headers:{
+        'Accept': 'application/json, text/plain',
+        'Content-type':'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then((res)=>checkStatus(res))
+    .then((res)=>res.json())
+    .then((cb)=>{
+      console.log(cb)
+      return dispatch(addList(cb.list));
     });
   }
 };
 export const sendCardToServer = (data) => {
-
   return (dispatch) => {
-     
-    fetch('/ok', {
+    fetch('/cardList/newCard', {
       method: "POST",
       headers:{
         'Accept': 'application/json, text/plain',
@@ -41,10 +65,11 @@ export const sendCardToServer = (data) => {
       },
       body: JSON.stringify(data)
     })
+    .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{
-      console.log(cb)
-      return dispatch(addCard(cb));
+      
+      return dispatch(addCard(cb.card));
     });
   }
 };
@@ -52,15 +77,38 @@ export const requestBoardsList = (data) => {
 
   return (dispatch) => {
      
-    fetch('/ok')
+    fetch('/boards')
+    .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{
-      console.log(cb)
-      return dispatch(addBoardsArray(cb));
+      
+      return dispatch(addBoardsArray(cb.boards));
     });
   }
 };
-
+export const requestLists = (data) => {
+  return (dispatch) => {
+     
+    fetch('/newList')
+    .then((res)=>checkStatus(res))
+    .then((res)=>res.json())
+    .then((cb)=>{
+       
+      return dispatch(addListsArray(cb));
+    });
+  }
+};
+export const requestCardsAndLists = (data) => {
+  return (dispatch) => {
+    fetch('/cardList')
+    .then((res)=>checkStatus(res))
+    .then((res)=>res.json())
+    .then((cb)=>{
+      dispatch(addListsArray(cb.list));
+      return dispatch(addCardsArray(cb.card));
+    });
+  }
+};
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {

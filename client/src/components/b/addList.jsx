@@ -1,27 +1,27 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {sendBoardToServer} from '../../action'
+import {sendListToServer} from '../../action'
 
 class AddList extends Component {
 	constructor(props)  {
     	super();
       this.state= {
-        nameOfBoard: ""
+        nameOfList: ""
       };
-      this.handleBaordNameChange=this.handleBaordNameChange.bind(this);
+      this.handleListNameChange=this.handleListNameChange.bind(this);
   	}
 
 
-   handleBaordNameChange(e){
-     this.setState({nameOfBoard: e.target.value});
+   handleListNameChange(e){
+     this.setState({nameOfList: e.target.value});
   }
   render() {
     return (
 	    <div  className="add-list lists-menu__item">
           <p className="add-list__item add-list-title">Create new list...</p>
           <div className="add-list__item">
-	    	    <input  type="text" value={this.state.nameOfBoard} onChange={this.handleBaordNameChange}/>
-            <button onClick={()=>this.props.onAddBoard(this.state.nameOfBoard)}>Submit</button>
+	    	    <input  type="text" value={this.state.nameOfList} onChange={this.handleListNameChange}/>
+            <button onClick={()=>this.props.onAddList(this.state.nameOfList)}>Submit</button>
           </div>
 	    </div>
     );
@@ -34,8 +34,8 @@ export default connect(
      }),
      dispatch => ({
 
-        onAddBoard: (bn)=> {
-          dispatch(sendBoardToServer({boardName : bn}));
+        onAddList: (ln)=> {
+          dispatch(sendListToServer({listName : ln}));
        }
      })
      )(AddList);

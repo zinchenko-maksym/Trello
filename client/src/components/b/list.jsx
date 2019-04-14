@@ -7,6 +7,7 @@ class List extends Component {
     	super();
       this.state={
         addingCard: false
+
       }
       this.addCardMenu=this.addCardMenu.bind(this)
       this.changeAddCardMenu=this.changeAddCardMenu.bind(this)
@@ -20,22 +21,24 @@ class List extends Component {
             })
     }
     returnCards(){
-      console.log(this.props.myStore, 3)
+ 
       let cardsArr=this.props.myStore.cards
-      console.log(cardsArr,56)
+      
       let arr=[];
       for (var i = 0; i <=cardsArr.length - 1; i++) {
-        arr.push(<Card key={cardsArr[i].cardName} name={cardsArr[i].cardName}/>)
+        if(this.props.name===cardsArr[i].listName){
+          arr.push(<Card key={cardsArr[i].cardName}  name={cardsArr[i].cardName}/>)
+        }
       }
       return arr
-  }
+    }
     addCardMenu(){
       if(this.state.addingCard){
         return <div className="add-card" onClick={this.changeAddCardMenu}>asddf</div>
       }
       else
       {
-        return <AddCardField/>
+        return <AddCardField listName={this.props.name}/>
       }
     }
   render() {

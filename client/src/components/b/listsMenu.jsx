@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import List from './list';
 import AddList from './addList';
-import {requestBoardsList} from '../../action'
+import {requestCardsAndLists} from '../../action'
 class ListMenu extends Component {
 	constructor(props){
 		super();
@@ -10,13 +10,14 @@ class ListMenu extends Component {
 
 	}
   componentDidMount(){
+    
     this.props.onRequestLists()
   }
 	returnLists(){
-		let listsArr=this.props.myStore.boards
+		let listsArr=this.props.myStore.lists
 		let arr=[];
 		for (var i = 0; i <=listsArr.length - 1; i++) {
-			arr.push(<List key={listsArr[i].boardName} name={listsArr[i].boardName}/>)
+			arr.push(<List key={listsArr[i].listName} name={listsArr[i].listName}/>)
 		}
 		return arr
 	}
@@ -39,7 +40,8 @@ export default connect(
      }),
      dispatch => ({
        onRequestLists: ()=>{
-         dispatch(requestBoardsList())
+         dispatch(requestCardsAndLists())
+         
        }
      })
      )(ListMenu);

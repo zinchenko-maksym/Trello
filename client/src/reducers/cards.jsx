@@ -1,4 +1,4 @@
-const initialState = [{cardName:"ss"}, {cardName:"saads"}]
+const initialState = [{cardName:"ss", listName:"three"}, {cardName:"saads", listName:"three"}]
 
 
 const cards = (state = initialState, action) => {
@@ -8,7 +8,7 @@ const cards = (state = initialState, action) => {
         ...state,
         action.payload
       ];
-    case 'ADD_CARD_ARRAY':
+    case 'ADD_CARDS_ARRAY':
       return [
           ...state,
           ...action.payload
