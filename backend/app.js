@@ -32,9 +32,9 @@ app.use((req, res, next) => {
 
 
 
-
-app.use('/boards', borderRoutes);
 app.use('/cardList', cardListRoutes);
+app.use('/boards', borderRoutes);
+
 
 app.use((req, res, next) => {
     const error = new Error('Not found');

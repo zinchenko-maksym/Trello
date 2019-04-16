@@ -15,20 +15,18 @@ class ListMenu extends Component {
   }
 	returnLists(){
 		let listsArr=this.props.myStore.lists
-		let arr=[];
-		for (var i = 0; i <=listsArr.length - 1; i++) {
-			arr.push(<List key={listsArr[i].listName} name={listsArr[i].listName}/>)
-		}
+
+		let arr= listsArr.map((list)=>{
+     
+      return <List key={list._id} id={list._id}  name={list.listName}/>})
+      
 		return arr
 	}
   	render() {
     	return (
       	<div className="lists-menu">
-          
-        		{this.returnLists()}
-          
+          {this.returnLists()}
         	<AddList/>
-        	
       	</div>
     	);
   	}

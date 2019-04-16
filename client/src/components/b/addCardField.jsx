@@ -17,7 +17,7 @@ class AddCardField extends Component {
     return (
       	<div className="add-card-field" >
           	<input type="text" value={this.state.nameOfCard} onChange={this.handleCardNameChange}/>
-          	<button onClick={()=>this.props.onAddCard(this.state.nameOfCard, this.props.listName)}>OK</button>
+          	<button onClick={()=>this.props.onAddCard(this.state.nameOfCard, this.props.listId)}>OK</button>
        	</div>
     );
   }
@@ -29,8 +29,8 @@ export default connect(
      }),
      dispatch => ({
 
-        onAddCard: (cn, ln)=> {
-          dispatch(sendCardToServer({cardName : cn, listName:ln}));
+        onAddCard: (cn, id)=> {
+          dispatch(sendCardToServer({cardName : cn, listId:id}));
        }
      })
      )(AddCardField);

@@ -1,26 +1,95 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 
-router.get('/', (req, res, next) => {
-    const l = [{listName:"asddasddf"},{listName:"four"}];
-  const c = [{ cardName: "43", listName:"asddasddf"}, {cardName: "4ss3",listName:"asddasddf"}];
-    
-    res.status(200).json({
-        list: l, card: c
-    });
+const List = require('../models/list')
+const Card = require('../models/card')
+
+router.get('/', (req, res, next) => {   
+     Card.find({})
+        .exec()
+        .then(cards => {
+            List.find({})
+            .exec()
+            .then(lists => {
+                res.status(200).json({
+                    lists: lists,
+                    cards: cards
+                });
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({error: err})
+        });
 });
 
 router.post('/newCard', (req, res, next) => {
-   console.log(req.body)
-    res.status(201).json({
-        card: req.body
+    const card = new Card({
+        _id: new mongoose.Types.ObjectId(),
+        cardName: req.body.cardName,
+        listId: req.body.listId
     });
+    card
+        .save()
+        .then((result)=> {
+            res.status(201).json({
+                card: result
+            });
+        })
+        .catch(err => {    
+            console.log(err);
+            res.status(500).json({error: err})
+        }); 
 });
 router.post('/newList', (req, res, next) => {
-   console.log(req.body)
-    res.status(201).json({
-        list: req.body
+    const list = new List({
+        _id: new mongoose.Types.ObjectId(),
+        listName: req.body.listName,
     });
+    list
+        .save()
+        .then((result)=> {
+            res.status(201).json({
+                list: result
+            });
+        })
+        .catch(err => {    
+            console.log(err);
+            res.status(500).json({error: err})
+        }); 
+});
+
+
+router.delete('/deleteLists', (req, res, next) => {
+    
+    List.deleteMany({})
+        .exec()
+        .then(doc => {
+        res.status(200).json({
+            hi:  "hi"
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({error: err})
+        }); 
+    
+});
+router.delete('/deleteCards', (req, res, next) => {
+    
+    Card.deleteMany({})
+        .exec()
+        .then(doc => {
+        res.status(200).json({
+            hi:  "hi"
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({error: err})
+        }); 
+    
 });
 
 

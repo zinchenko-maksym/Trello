@@ -1,4 +1,4 @@
-const initialState = [{listName:"three"}, {listName:"one"}]
+const initialState = [];
 
 
 const lists = (state = initialState, action) => {
@@ -12,7 +12,8 @@ const lists = (state = initialState, action) => {
       return [
           ...state,
           ...action.payload
-      ]
+      ];
+    
     default:
       return state
   }

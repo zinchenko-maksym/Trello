@@ -13,6 +13,7 @@ class List extends Component {
       this.changeAddCardMenu=this.changeAddCardMenu.bind(this)
       this.returnCards=this.returnCards.bind(this)
   	}
+
     changeAddCardMenu(){
 
       
@@ -21,15 +22,17 @@ class List extends Component {
             })
     }
     returnCards(){
- 
       let cardsArr=this.props.myStore.cards
-      
-      let arr=[];
-      for (var i = 0; i <=cardsArr.length - 1; i++) {
-        if(this.props.name===cardsArr[i].listName){
-          arr.push(<Card key={cardsArr[i].cardName}  name={cardsArr[i].cardName}/>)
+      let arr=cardsArr.map((card)=>
+        {  
+          
+          if(card.listId===this.props.id)
+
+          {return <Card key={card._id}  name={card.cardName}/>}
+          return null
         }
-      }
+        )
+      
       return arr
     }
     addCardMenu(){
@@ -38,10 +41,11 @@ class List extends Component {
       }
       else
       {
-        return <AddCardField listName={this.props.name}/>
+        return <AddCardField listId={this.props.id}/>
       }
     }
   render() {
+    
     return (
   	    <div className="lists-menu__item list">
   	    	<h3 className="list__title list__item">{this.props.name}</h3>

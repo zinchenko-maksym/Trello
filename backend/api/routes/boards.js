@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const Board = require('../models/board')
 
 router.get('/', (req, res, next) => {
-    const boards = [{boardName:"asddasddf"},{boardName:"three"}];
+   
     Board.find({})
         .exec()
         .then(doc => {
@@ -19,23 +19,23 @@ router.get('/', (req, res, next) => {
         }); 
     
 });
-/**/
+
 router.post('/', (req, res, next) => {
-   const brd = new Board({
+   const board = new Board({
         _id: new mongoose.Types.ObjectId(),
         boardName: req.body.boardName
     });
-    brd
+    board
         .save()
         .then((result)=> {
-       
             res.status(201).json({
                 boards: result
             });
         })
-        .catch(err=> console.log(err));
-    
-    
+        .catch(err => {    
+            console.log(err);
+            res.status(500).json({error: err})
+        });
 });
 
 router.delete('/', (req, res, next) => {

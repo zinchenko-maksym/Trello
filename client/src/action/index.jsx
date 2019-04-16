@@ -19,7 +19,7 @@ export const addListsArray = (payload) => {
 
 export const sendBoardToServer = (data) => {
   return (dispatch) => {
-     console.log(data)
+    
     fetch('/boards', {
       method: "POST",
       headers:{
@@ -31,7 +31,7 @@ export const sendBoardToServer = (data) => {
     .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{
-      console.log(cb)
+      
       return dispatch(addBoard(cb.boards));
     });
   }
@@ -44,18 +44,20 @@ export const sendListToServer = (data) => {
       headers:{
         'Accept': 'application/json, text/plain',
         'Content-type':'application/json'
-      },
+      },  
       body: JSON.stringify(data)
     })
     .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{
-      console.log(cb)
+      
       return dispatch(addList(cb.list));
     });
   }
 };
 export const sendCardToServer = (data) => {
+  
+  /*return (dispatch)=>{dispatch(addCard(data))}*/
   return (dispatch) => {
     fetch('/cardList/newCard', {
       method: "POST",
@@ -68,7 +70,6 @@ export const sendCardToServer = (data) => {
     .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{
-      
       return dispatch(addCard(cb.card));
     });
   }
@@ -86,7 +87,7 @@ export const requestBoardsList = (data) => {
     });
   }
 };
-export const requestLists = (data) => {
+/*export const requestLists = (data) => {
   return (dispatch) => {
      
     fetch('/newList')
@@ -97,15 +98,16 @@ export const requestLists = (data) => {
       return dispatch(addListsArray(cb));
     });
   }
-};
+};*/
 export const requestCardsAndLists = (data) => {
   return (dispatch) => {
     fetch('/cardList')
     .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{
-      dispatch(addListsArray(cb.list));
-      return dispatch(addCardsArray(cb.card));
+      
+       dispatch(addListsArray(cb.lists));
+      return dispatch(addCardsArray(cb.cards))
     });
   }
 };
