@@ -37,7 +37,7 @@ class List extends Component {
     }
     addCardMenu(){
       if(this.state.addingCard){
-        return <div className="add-card" onClick={this.changeAddCardMenu}>asddf</div>
+        return <div className="add-card" onClick={this.changeAddCardMenu}>Add Card</div>
       }
       else
       {
@@ -49,6 +49,7 @@ class List extends Component {
     return (
   	    <div className="lists-menu__item list">
   	    	<h3 className="list__title list__item">{this.props.name}</h3>
+
           {this.returnCards()}
           {this.addCardMenu()}
   	    </div>
