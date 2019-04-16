@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Card from './card';
+import DeleteList from './deleteList';
 import AddCardField from './addCardField';
 class List extends Component {
 	constructor(props)  {
