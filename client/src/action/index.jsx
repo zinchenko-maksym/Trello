@@ -59,10 +59,10 @@ export const sendBoardToServer = (data) => {
   }
 };
 export const sendListToServer = (data) => {
-
+  let adress= /b\/([a-z1-9]+)/.exec(window.location.href) 
   return (dispatch) => {
      
-    fetch('/cardList/newList', {
+    fetch(`${adress[1]}/newList`, {
       method: "POST",
       headers:{
         'Accept': 'application/json, text/plain',
@@ -82,7 +82,7 @@ export const sendCardToServer = (data) => {
   
   /*return (dispatch)=>{dispatch(addCard(data))}*/
   return (dispatch) => {
-    fetch('/cardList/newCard', {
+    fetch('/b/newCard', {
       method: "POST",
       headers:{
         'Accept': 'application/json, text/plain',
@@ -112,8 +112,10 @@ export const requestBoardsList = (data) => {
 };
 
 export const requestCardsAndLists = (data) => {
+  let adress= /b\/([a-z1-9]+)/.exec(window.location.href) 
+  console.log(adress[1])
   return (dispatch) => {
-    fetch('/cardList')
+    fetch(adress[1])
     .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{

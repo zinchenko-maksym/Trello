@@ -6,7 +6,8 @@ const listSchema=mongoose.Schema({
 	cards:[{
 		_id: mongoose.Schema.Types.ObjectId,
 		CardName: String
-	}]
+	}],
+	boardId: String
 });
 
 module.exports = mongoose.model('List', listSchema);

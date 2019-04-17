@@ -7,8 +7,9 @@ class Board extends Component {
   	}
 
   render() {
+
     return (
-	    <a href="http://localhost:3000/b" className="boards-list__item board">
+	    <a href={`http://localhost:3000/b/${this.props.id}`} className="boards-list__item board">
 	    	 {this.props.name}
 	    </a>
     );

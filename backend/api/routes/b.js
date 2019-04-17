@@ -5,11 +5,12 @@ const mongoose = require('mongoose');
 const List = require('../models/list')
 const Card = require('../models/card')
 
-router.get('/', (req, res, next) => {   
+router.get('/:boardId', (req, res, next) => { 
+
      Card.find({})
         .exec()
         .then(cards => {
-            List.find({})
+            List.find({boardId: req.params.boardId},function (err, docs) {})
             .exec()
             .then(lists => {
                 res.status(200).json({
@@ -23,7 +24,25 @@ router.get('/', (req, res, next) => {
             res.status(500).json({error: err})
         });
 });
+router.get('/', (req, res, next) => { 
 
+     Card.find({})
+        .exec()
+        .then(cards => {
+            List.find({},function (err, docs) {})
+            .exec()
+            .then(lists => {
+                res.status(200).json({
+                    lists: lists,
+                    cards: cards
+                });
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({error: err})
+        });
+});
 router.post('/newCard', (req, res, next) => {
 
         
@@ -46,10 +65,14 @@ router.post('/newCard', (req, res, next) => {
         }); 
 });
 
-router.post('/newList', (req, res, next) => {
+router.post('/:boardId/newList', (req, res, next) => {
+    const id= req.params.boardId;
+    console.log(id)
     const list = new List({
+
         _id: new mongoose.Types.ObjectId(),
         listName: req.body.listName,
+        boardId: req.params.boardId
     });
     list
         .save()

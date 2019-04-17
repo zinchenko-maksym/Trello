@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 
 
 
-app.use('/cardList', cardListRoutes);
+app.use('/b', cardListRoutes);
 app.use('/boards', borderRoutes);
 
 
