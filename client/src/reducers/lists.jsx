@@ -8,6 +8,10 @@ const lists = (state = initialState, action) => {
         ...state,
         action.payload
       ];
+    case 'DELETE_LIST':
+    console.log(action.payload.id)
+      const listId = action.payload.id;
+      return state.filter(list => list._id !== listId)
     case 'ADD_LISTS_ARRAY':
       return [
           ...state,

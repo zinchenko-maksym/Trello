@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Card from './card';
-import DeleteList from './deleteList';
+import DeleteListButton from './deleteListButton';
 import AddCardField from './addCardField';
 class List extends Component {
 	constructor(props)  {
@@ -16,8 +16,6 @@ class List extends Component {
   	}
 
     changeAddCardMenu(){
-
-      
       this.setState({
               addingCard: !this.state.addingCard
             })
@@ -49,8 +47,11 @@ class List extends Component {
     
     return (
   	    <div className="lists-menu__item list">
-  	    	<h3 className="list__title list__item">{this.props.name}</h3>
-
+  	    	<h3 className="list__title list__item">
+            {this.props.name}
+            <DeleteListButton listId={this.props.id}/>
+          </h3>
+          
           {this.returnCards()}
           {this.addCardMenu()}
   	    </div>

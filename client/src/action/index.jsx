@@ -16,6 +16,11 @@ export const addList = (payload) => {
 export const addListsArray = (payload) => {
   return {type: "ADD_LISTS_ARRAY", payload}
 }
+export const deleteList = (payload) => {
+  console.log(payload,5)
+  return {type: "DELETE_LIST", payload}
+}
+
 
 export const sendBoardToServer = (data) => {
   return (dispatch) => {
@@ -37,6 +42,7 @@ export const sendBoardToServer = (data) => {
   }
 };
 export const sendListToServer = (data) => {
+
   return (dispatch) => {
      
     fetch('/cardList/newList', {
@@ -87,18 +93,7 @@ export const requestBoardsList = (data) => {
     });
   }
 };
-/*export const requestLists = (data) => {
-  return (dispatch) => {
-     
-    fetch('/newList')
-    .then((res)=>checkStatus(res))
-    .then((res)=>res.json())
-    .then((cb)=>{
-       
-      return dispatch(addListsArray(cb));
-    });
-  }
-};*/
+
 export const requestCardsAndLists = (data) => {
   return (dispatch) => {
     fetch('/cardList')
@@ -122,28 +117,4 @@ function checkStatus(response) {
   console.log(error);
   throw error;
 }
-/*
-export const sendPlacesToServer = (places)=> {
-  
-  let arrOfPlaces= '[';
-  if(places.length===0){
-    return {type: "", places}
-  }
-  for (var i = 0; i < places.length; i++) {
-    arrOfPlaces+=JSON.stringify({pl: places[i]})+",";
-  }
-  arrOfPlaces=arrOfPlaces.slice(0,-1)+"]";
-  
-  return (dispatch) => {
-    fetch('/ok', {
-      method: "POST",
-      headers:{
-        'Accept': 'application/json, text/plain',
-        'Content-type':'application/json'
-      },
-      body: arrOfPlaces
-  })
-      .then((res)=>checkStatus(res))
 
-  }
-}*/
