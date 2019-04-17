@@ -2,7 +2,11 @@ const mongoose = require('mongoose')
 
 const listSchema=mongoose.Schema({
 	_id: mongoose.Schema.Types.ObjectId,
-	listName: String
+	listName: String,
+	cards:[{
+		_id: mongoose.Schema.Types.ObjectId,
+		CardName: String
+	}]
 });
 
 module.exports = mongoose.model('List', listSchema);

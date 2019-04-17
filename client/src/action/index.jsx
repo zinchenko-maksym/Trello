@@ -17,11 +17,28 @@ export const addListsArray = (payload) => {
   return {type: "ADD_LISTS_ARRAY", payload}
 }
 export const deleteList = (payload) => {
-  console.log(payload,5)
+  console.log(payload)
   return {type: "DELETE_LIST", payload}
 }
 
-
+export const deleteListRequest = (data) => {
+  return (dispatch) => {
+    
+    fetch('/cardList/deleteList', {
+      method: "DELETE",
+      headers:{
+        'Accept': 'application/json, text/plain',
+        'Content-type':'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then((res)=>checkStatus(res))
+    .then((res)=>res.json())
+    .then((cb)=>{
+      return dispatch(deleteList(data));
+    });
+  }
+};
 export const sendBoardToServer = (data) => {
   return (dispatch) => {
     

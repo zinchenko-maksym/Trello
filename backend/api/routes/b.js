@@ -25,6 +25,9 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/newCard', (req, res, next) => {
+
+        
+
     const card = new Card({
         _id: new mongoose.Types.ObjectId(),
         cardName: req.body.cardName,
@@ -42,6 +45,7 @@ router.post('/newCard', (req, res, next) => {
             res.status(500).json({error: err})
         }); 
 });
+
 router.post('/newList', (req, res, next) => {
     const list = new List({
         _id: new mongoose.Types.ObjectId(),
@@ -58,6 +62,22 @@ router.post('/newList', (req, res, next) => {
             console.log(err);
             res.status(500).json({error: err})
         }); 
+});
+
+router.delete('/deleteList', (req, res, next) => {
+
+    Card.remove({listId: req.body.listId})
+        .exec()
+    List.deleteOne({_id: req.body.listId})
+        .exec()
+        .then(doc => {
+        res.status(200).json(doc);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({error: err})
+        }); 
+    
 });
 
 

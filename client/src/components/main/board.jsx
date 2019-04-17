@@ -8,7 +8,7 @@ class Board extends Component {
 
   render() {
     return (
-	    <a href="https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-is-valid.md" className="boards-list__item board">
+	    <a href="http://localhost:3000/b" className="boards-list__item board">
 	    	 {this.props.name}
 	    </a>
     );

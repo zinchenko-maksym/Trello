@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {deleteList} from '../../action'
+import {deleteListRequest} from '../../action'
 class DeleteListButton extends Component {
 	
   render() {
@@ -20,7 +20,7 @@ export default connect(
      dispatch => ({
         onDeleteList: (res)=> {
 
-          dispatch(deleteList({id: res}));
+          dispatch(deleteListRequest({listId: res}));
        }
      })
      )(DeleteListButton);
