@@ -23,9 +23,9 @@ class BoardsMenu extends Component {
   	render() {
     	return (
       	<div className="boards-menu">
-          <div className="boards-list boards-menu__item">
+          
         		{this.returnBoardsList()}
-          </div>
+          
         	<AddBoard/>
         	
       	</div>

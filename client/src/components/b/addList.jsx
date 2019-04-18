@@ -9,9 +9,17 @@ class AddList extends Component {
         nameOfList: ""
       };
       this.handleListNameChange=this.handleListNameChange.bind(this);
+      this.addList=this.addList.bind(this);
   	}
 
-
+    addList(e){
+    if(/\S/.exec(this.state.nameOfList)){
+      this.props.onAddList(this.state.nameOfList)
+      this.setState({
+        nameOfList: ""
+     })
+    }
+  }
    handleListNameChange(e){
      this.setState({nameOfList: e.target.value});
   }
@@ -21,7 +29,7 @@ class AddList extends Component {
           <p className="add-list__item add-list-title">Create new list...</p>
           <div className="add-list__item">
 	    	    <input  type="text" value={this.state.nameOfList} onChange={this.handleListNameChange}/>
-            <button onClick={()=>this.props.onAddList(this.state.nameOfList)}>Submit</button>
+            <button onClick={this.addList}>Submit</button>
           </div>
 	    </div>
     );

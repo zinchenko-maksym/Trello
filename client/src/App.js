@@ -13,7 +13,7 @@ class App extends Component {
     <BrowserRouter>
       <div className="App">
         <Route path='/main' component={MainPage}/>
-        <Route path='/b' component={BoardsPage}/>
+        <Route path='/b/:id' component={BoardsPage}/>
       </div>
     </BrowserRouter>
     );

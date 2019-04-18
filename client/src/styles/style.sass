@@ -6,20 +6,14 @@
 	display: -o-flex
 	display: flex
 	flex-flow: row wrap
-	
 
 	&__item
-		
+		height: 120px
 		flex-grow: 1
 		flex: none
 		
-.add-board
-	width: 200px	
-	background-color: #459
-	height: 100px
-	margin: 10px
 
-.boards-list
+.boards-menu
 	display: -webkit-flex
 	display: -moz-flex
 	display: -ms-flex
@@ -27,23 +21,55 @@
 	display: flex
 	flex-flow: row wrap
 
-
 	&__item
-		display: -webkit-flex
-		display: -moz-flex
-		display: -ms-flex
-		display: -o-flex
-		display: flex
+		text-decoration: none
+		
 		align-items: center
 		justify-content: space-around
-		height: 100px
+		height: 120px
 		width: 200px
 		flex-grow: 1
 		flex: none
 		background-color: green
 		margin: 10px
+		color: black
+		transition: box-shadow 0.3s ease-out 0.1s
+		border-radius: 10px
+		
+.board
+	display: -webkit-flex
+	display: -moz-flex
+	display: -ms-flex
+	display: -o-flex
+	display: flex
 
+	&:hover
+		box-shadow: 0 0 10px rgba(51, 204, 51, 1)
 
+.add-board
+	width: 200px	
+	background-color: #459
+	margin: 10px
+	&__button
+		background-color: #fff
+		border-radius: 3px
+		border: none
+		width: 100px
+		height: 24px
+		margin-top: 12px
+		cursor: pointer
+	&__input
+		height: 24px
+		border: none
+		border-radius: 5px
+		cursor: text
+		padding: 0 10px
+		outline: 0
+		&:focus
+			border:none
+			outline: 0
+	&__title
+		margin: 13px
 
 //List page
 .lists-menu
@@ -63,20 +89,20 @@
 		display: flex
 		align-items: center
 		justify-content: space-around
-		
-		width: 200px
+		border-radius: 8px
+		width: 220px
 		flex-grow: 1
 		flex: none
 		background-color: green
 		margin: 10px
+		min-height: 170px
 		
 .add-list
 	display: -webkit-flex
 	display: -moz-flex
 	display: -ms-flex
 	display: -o-flex
-	display: flex
-	width: 200px	
+	display: flex	
 	background-color: #459
 	margin: 10px
 	flex-flow: row wrap
@@ -91,8 +117,6 @@
 	display: -o-flex
 	display: flex
 	flex-flow: row wrap
-
-
 	&__item
 		display: -webkit-flex
 		display: -moz-flex
@@ -107,13 +131,19 @@
 		flex: none
 		background-color: green
 		margin: 10px
+
+.list-title
+	flex-grow: 3
+	max-width: 176px
+	overflow: hidden
 .add-card
 	display: flex
 	width: 200px
 .delete-list
-	background-color: red
-	width: 24px
-	height: 24px
+	color: red
+	border-radius: 5px
+	width: 20px
+	height: 20px
 	cursor: pointer
 	&:hover
 		box-shadow: 0 0 10px rgba(0,0,0,0.5)

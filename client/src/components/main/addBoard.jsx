@@ -9,20 +9,25 @@ class AddBoard extends Component {
         nameOfBoard: ""
       };
       this.handleBaordNameChange=this.handleBaordNameChange.bind(this);
+      this.addBoard=this.addBoard.bind(this);
   	}
-
-
+  addBoard(e){
+      if(/\S/.exec(this.state.nameOfBoard)){
+          this.props.onAddBoard(this.state.nameOfBoard)
+      }
+      
+  }
    handleBaordNameChange(e){
      this.setState({nameOfBoard: e.target.value});
   }
   render() {
     return (
 	    <div  className="add-board boards-menu__item">
-          <p>Create new board...</p>
-          <div >
-	    	    <input type="text" value={this.state.nameOfBoard} onChange={this.handleBaordNameChange}/>
-            <button onClick={()=>this.props.onAddBoard(this.state.nameOfBoard)}>Submit</button>
-          </div>
+          <p className="add-board__title"> Create new board...</p>
+          <form>
+	    	    <input type="text" value={this.state.nameOfBoard} onChange={this.handleBaordNameChange} className="add-board__input"/>
+            <button onClick={this.addBoard} className="add-board__button">Submit</button>
+          </form>
 	    </div>
     );
   }

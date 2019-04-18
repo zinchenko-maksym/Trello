@@ -47,8 +47,8 @@ class List extends Component {
     
     return (
   	    <div className="lists-menu__item list">
-  	    	<h3 className="list__title list__item">
-            {this.props.name}
+  	    	<h3 className=" list__item">
+            <p className="list-title">{this.props.name}</p>
             <DeleteListButton listId={this.props.id}/>
           </h3>
           

@@ -17,14 +17,13 @@ export const addListsArray = (payload) => {
   return {type: "ADD_LISTS_ARRAY", payload}
 }
 export const deleteList = (payload) => {
-  console.log(payload)
   return {type: "DELETE_LIST", payload}
 }
 
 export const deleteListRequest = (data) => {
   return (dispatch) => {
     
-    fetch('/cardList/deleteList', {
+    fetch('/b/deleteList', {
       method: "DELETE",
       headers:{
         'Accept': 'application/json, text/plain',
