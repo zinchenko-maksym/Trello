@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 
 const borderRoutes = require('./api/routes/boards');
 const cardListRoutes = require('./api/routes/b');
+const userRoutes = require('./api/routes/user');
 
 mongoose.connect('mongodb+srv://maklaut:MZ7145824_@trello-aktlt.mongodb.net/test?retryWrites=true', 
   {
@@ -34,7 +35,7 @@ app.use((req, res, next) => {
 
 app.use('/b', cardListRoutes);
 app.use('/boards', borderRoutes);
-
+app.use('/user', userRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Not found');

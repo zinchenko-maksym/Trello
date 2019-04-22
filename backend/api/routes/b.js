@@ -1,139 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const checkAuth = require('../middleware/check-auth');
 
 const List = require('../models/list')
 const Card = require('../models/card')
+const ListsController = require('../controllers/list')
 
-router.get('/:boardId', (req, res, next) => { 
+router.get('/:boardId', ListsController.list_find_list_by_id);
+router.get('/',  ListsController.get_all_lists);
+router.post('/newCard',/*checkAuth,*/ ListsController.add_card);
 
-     Card.find({})
-        .exec()
-        .then(cards => {
-            List.find({boardId: req.params.boardId},function (err, docs) {})
-            .exec()
-            .then(lists => {
-                res.status(200).json({
-                    lists: lists,
-                    cards: cards
-                });
-            })
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({error: err})
-        });
-});
-router.get('/', (req, res, next) => { 
+router.post('/:boardId/newList'/*,checkAuth*/, ListsController.add_list);
 
-     Card.find({})
-        .exec()
-        .then(cards => {
-            List.find({},function (err, docs) {})
-            .exec()
-            .then(lists => {
-                res.status(200).json({
-                    lists: lists,
-                    cards: cards
-                });
-            })
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({error: err})
-        });
-});
-router.post('/newCard', (req, res, next) => {
-
-        
-
-    const card = new Card({
-        _id: new mongoose.Types.ObjectId(),
-        cardName: req.body.cardName,
-        listId: req.body.listId
-    });
-    card
-        .save()
-        .then((result)=> {
-            res.status(201).json({
-                card: result
-            });
-        })
-        .catch(err => {    
-            console.log(err);
-            res.status(500).json({error: err})
-        }); 
-});
-
-router.post('/:boardId/newList', (req, res, next) => {
-    const id= req.params.boardId;
-    console.log(id)
-    const list = new List({
-
-        _id: new mongoose.Types.ObjectId(),
-        listName: req.body.listName,
-        boardId: req.params.boardId
-    });
-    list
-        .save()
-        .then((result)=> {
-            res.status(201).json({
-                list: result
-            });
-        })
-        .catch(err => {    
-            console.log(err);
-            res.status(500).json({error: err})
-        }); 
-});
-
-router.delete('/deleteList', (req, res, next) => {
-
-    Card.remove({listId: req.body.listId})
-        .exec()
-    List.deleteOne({_id: req.body.listId})
-        .exec()
-        .then(doc => {
-        res.status(200).json(doc);
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({error: err})
-        }); 
-    
-});
+router.delete('/deleteList',/*checkAuth,*/ ListsController.delete_list);
 
 
-router.delete('/deleteLists', (req, res, next) => {
-    
-    List.deleteMany({})
-        .exec()
-        .then(doc => {
-        res.status(200).json({
-            hi:  "hi"
-            });
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({error: err})
-        }); 
-    
-});
-router.delete('/deleteCards', (req, res, next) => {
-    
-    Card.deleteMany({})
-        .exec()
-        .then(doc => {
-        res.status(200).json({
-            hi:  "hi"
-            });
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({error: err})
-        }); 
-    
-});
+router.delete('/deleteLists', ListsController.delete_all_lists);
+router.delete('/deleteCards', ListsController.delete_all_cards);
 
 
 module.exports = router;
