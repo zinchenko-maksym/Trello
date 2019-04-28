@@ -19,7 +19,28 @@ export const addListsArray = (payload) => {
 export const deleteList = (payload) => {
   return {type: "DELETE_LIST", payload}
 }
+export const loginSuccess = (payload) => {
+  return {type: "LOGIN_SUCCESS", payload}
+}
 
+export const fetchLogin = (data) => {
+  return (dispatch) => {
+    
+    fetch('/user/login', {
+      method: "POST",
+      headers:{
+        'Accept': 'application/json, text/plain',
+        'Content-type':'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then((res)=>checkStatus(res))
+    .then((res)=>res.json())
+    .then((cb)=>{
+      dispatch(loginSuccess(cb));
+    });
+  }
+};
 export const deleteListRequest = (data) => {
   return (dispatch) => {
     
@@ -27,7 +48,8 @@ export const deleteListRequest = (data) => {
       method: "DELETE",
       headers:{
         'Accept': 'application/json, text/plain',
-        'Content-type':'application/json'
+        'Content-type':'application/json',
+        'Authorization': `bearer ${localStorage.getItem("token")}` 
       },
       body: JSON.stringify(data)
     })
@@ -40,12 +62,13 @@ export const deleteListRequest = (data) => {
 };
 export const sendBoardToServer = (data) => {
   return (dispatch) => {
-    
+    console.log(`bearer ${localStorage.getItem("token")}` )
     fetch('/boards', {
       method: "POST",
       headers:{
         'Accept': 'application/json, text/plain',
-        'Content-type':'application/json'
+        'Content-type':'application/json',
+        'Authorization': `bearer ${localStorage.getItem("token")}` 
       },
       body: JSON.stringify(data)
     })
@@ -65,7 +88,8 @@ export const sendListToServer = (data) => {
       method: "POST",
       headers:{
         'Accept': 'application/json, text/plain',
-        'Content-type':'application/json'
+        'Content-type':'application/json',
+        'Authorization': `bearer ${localStorage.getItem("token")}` 
       },  
       body: JSON.stringify(data)
     })
@@ -78,14 +102,13 @@ export const sendListToServer = (data) => {
   }
 };
 export const sendCardToServer = (data) => {
-  
-  /*return (dispatch)=>{dispatch(addCard(data))}*/
   return (dispatch) => {
     fetch('/b/newCard', {
       method: "POST",
       headers:{
         'Accept': 'application/json, text/plain',
-        'Content-type':'application/json'
+        'Content-type':'application/json',
+        'Authorization': `bearer ${localStorage.getItem("token")}` 
       },
       body: JSON.stringify(data)
     })
@@ -109,7 +132,6 @@ export const requestBoardsList = (data) => {
     });
   }
 };
-
 export const requestCardsAndLists = (data) => {
   let adress= /b\/([a-z1-9]+)/.exec(window.location.href) 
   console.log(adress[1])

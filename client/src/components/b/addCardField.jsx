@@ -13,8 +13,10 @@ class AddCardField extends Component {
   	}
   handleCardNameChange(e){
     this.setState({nameOfCard: e.target.value});
+    
   }
-  addCard(e){
+  addCard(event){
+    event.preventDefault();
     if(/\S/.exec(this.state.nameOfCard)){
      this.props.onAddCard(this.state.nameOfCard, this.props.listId)
    }

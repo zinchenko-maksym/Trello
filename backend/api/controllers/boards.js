@@ -19,6 +19,7 @@ exports.boards_get_all = (req, res, next) => {
 }
 
 exports.boards_create_board = (req, res, next) => {
+   console.log(req.headers.authorization)
    const board = new Board({
         _id: new mongoose.Types.ObjectId(),
         boardName: req.body.boardName

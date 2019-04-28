@@ -11,7 +11,8 @@ class AddBoard extends Component {
       this.handleBaordNameChange=this.handleBaordNameChange.bind(this);
       this.addBoard=this.addBoard.bind(this);
   	}
-  addBoard(e){
+  addBoard(event){
+    event.preventDefault();
       if(/\S/.exec(this.state.nameOfBoard)){
           this.props.onAddBoard(this.state.nameOfBoard)
       }

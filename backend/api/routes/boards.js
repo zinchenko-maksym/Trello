@@ -7,7 +7,7 @@ const BoardsController = require('../controllers/boards')
 
 router.get('/', BoardsController.boards_get_all);
 
-router.post('/', /*checkAuth,*/ BoardsController.boards_create_board);
+router.post('/', checkAuth, BoardsController.boards_create_board);
 
 router.delete('/', BoardsController.deleate_all_boards);
 
