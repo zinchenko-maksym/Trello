@@ -19,11 +19,37 @@ export const addListsArray = (payload) => {
 export const deleteList = (payload) => {
   return {type: "DELETE_LIST", payload}
 }
-export const loginSuccess = (payload) => {
-  return {type: "LOGIN_SUCCESS", payload}
+export const authSuccess = (payload) => {
+  return {type: "AUTH_SUCCESS", payload}
+}
+export const authFailed = (payload) => {
+  return {type: "AUTH_FAILED", payload}
 }
 
-export const fetchLogin = (data) => {
+export const fetchSignUp = (data) => {
+  return (dispatch) => {
+    fetch('/user/signup', {
+      method: "POST",
+      headers:{
+        'Accept': 'application/json, text/plain',
+        'Content-type':'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then((res)=>checkStatus(res))
+    .then((res)=>res.json())
+    .then((cb)=>{
+      console.log(cb)
+      window.location.href = "http://localhost:3000/boards"               //Change to url
+    })
+    .catch((err)=>{
+      console.log(err)
+      dispatch(authFailed())
+    });
+  }
+};
+
+export const fetchLogIn = (data) => {
   return (dispatch) => {
     
     fetch('/user/login', {
@@ -37,7 +63,12 @@ export const fetchLogin = (data) => {
     .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{
-      dispatch(loginSuccess(cb));
+      dispatch(authSuccess(cb));
+      window.location.href = "http://localhost:3000/boards"   
+    })
+    .catch((err)=>{
+      console.log(err)
+      dispatch(authFailed())
     });
   }
 };
@@ -61,9 +92,10 @@ export const deleteListRequest = (data) => {
   }
 };
 export const sendBoardToServer = (data) => {
+  let adress= /boards\/([a-z1-9]+)/.exec(window.location.href) 
   return (dispatch) => {
     console.log(`bearer ${localStorage.getItem("token")}` )
-    fetch('/boards', {
+    fetch(adress[1], {
       method: "POST",
       headers:{
         'Accept': 'application/json, text/plain',
@@ -120,10 +152,11 @@ export const sendCardToServer = (data) => {
   }
 };
 export const requestBoardsList = (data) => {
-
+  let adress= /boards\/([a-z1-9]+)/.exec(window.location.href) 
+  console.log(`boardspage/${adress[1]}`)
   return (dispatch) => {
      
-    fetch('/boards')
+    fetch(`getboards/${adress[1]}`)
     .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{

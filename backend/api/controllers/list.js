@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const List = require('../models/list')
 const Card = require('../models/card')
 
-exports.list_find_list_by_id = (req, res, next) => { 
+exports.find_list_by_id = (req, res, next) => { 
      Card.find({})
         .exec()
         .then(cards => {
@@ -23,10 +23,10 @@ exports.list_find_list_by_id = (req, res, next) => {
 }
 
 exports.get_all_lists = (req, res, next) => { 
-
      Card.find({})
         .exec()
         .then(cards => {
+
             List.find({},function (err, docs) {})
             .exec()
             .then(lists => {
@@ -69,7 +69,6 @@ exports.add_card =(req, res, next) => {
 
 exports.add_list =(req, res, next) => {
     const id= req.params.boardId;
-    console.log(id)
     const list = new List({
 
         _id: new mongoose.Types.ObjectId(),
@@ -92,7 +91,7 @@ exports.add_list =(req, res, next) => {
 
 exports.delete_list= (req, res, next) => {
 
-    Card.remove({listId: req.body.listId})
+    Card.remove({list: req.body.listId})
         .exec()
     List.deleteOne({_id: req.body.listId})
         .exec()

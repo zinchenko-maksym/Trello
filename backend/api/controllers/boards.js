@@ -4,7 +4,7 @@ const Board = require('../models/board')
 
 
 exports.boards_get_all = (req, res, next) => {
-    Board.find({})
+    Board.find({user: req.params.userid})
         .exec()
         .then(doc => {
         res.status(200).json({
@@ -19,10 +19,11 @@ exports.boards_get_all = (req, res, next) => {
 }
 
 exports.boards_create_board = (req, res, next) => {
-   console.log(req.headers.authorization)
+    console.log(req.params.userid)
    const board = new Board({
         _id: new mongoose.Types.ObjectId(),
-        boardName: req.body.boardName
+        boardName: req.body.boardName,
+        user : req.params.userid
     });
     board
         .save()

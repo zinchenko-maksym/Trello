@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import BoardsMenu from './boardsMenu';
 
-class MainPage extends Component {
+class BoardsPage extends Component {
   render() {
     return (
       <div className="main-page">
@@ -12,4 +12,4 @@ class MainPage extends Component {
   }
 }
 
-export default MainPage;
+export default BoardsPage;

@@ -27,6 +27,7 @@ exports.user_signup = (req, res, next) => {
 					} else {
 						const user = new User({
 							_id: new mongoose.Types.ObjectId(),
+							name: req.body.name,
 							email: req.body.email,
 							password: hash
 						});
@@ -34,7 +35,9 @@ exports.user_signup = (req, res, next) => {
 							.save()
 							.then(result => {
 								res.status(201).json({
-									message: "User created"
+									message: "User created",
+									result: result
+
 								});
 							})
 							.catch(err => {
@@ -54,7 +57,6 @@ exports.user_login = (req, res, next)=>{
 	User.findOne({ email: req.body.email})
 	.exec()
 	.then(user => {
-		
 		if(!user){
 			return res.status(401).json({
 				message: 'Auth failed'
@@ -70,7 +72,7 @@ exports.user_login = (req, res, next)=>{
 				const token = jwt.sign({
 						email: user.email,
 						userId: user._id
-					}, "secret"/*process.env.JWT_KEY*/,
+					}, process.env.JWT_KEY,
 					{
 						expiresIn: "1h"
 					});

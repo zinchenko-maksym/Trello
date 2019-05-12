@@ -1,15 +1,21 @@
-const initialState = []
+const initialState = {isAuthorized : false , authStatus: ""}
 
 
 const auth = (state = initialState, action) => {
 	switch (action.type) {
-    case 'LOGIN_SUCCESS':
+    case 'AUTH_SUCCESS':
       localStorage.setItem("token",
         action.payload.token)
       return{
-        ...state
+        ...state,
+        isAuthorized : true
       };
-      	
+    case 'AUTH_FAILED':
+      return{
+        ...state,
+        isAuthorized : false,
+        authStatus: "Authorization failed"
+      }; 	
     default:
       return state
   }
