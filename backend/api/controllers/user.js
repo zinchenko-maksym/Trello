@@ -71,14 +71,17 @@ exports.user_login = (req, res, next)=>{
 			if(result){
 				const token = jwt.sign({
 						email: user.email,
-						userId: user._id
+						userId: user._id,
+						userName: user.name
 					}, process.env.JWT_KEY,
 					{
 						expiresIn: "1h"
 					});
+				
 				return res.status(200).json({
 					message: "Auth successful",
-					token: token
+					token: token,
+					adressName: user.email.split("@")[0] 
 				})
 			}
 			return res.status(401).json({

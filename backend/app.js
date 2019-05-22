@@ -38,6 +38,7 @@ app.use('/boards', borderRoutes);
 app.use('/user', userRoutes);
 
 app.use((req, res, next) => {
+    console.log(req, res, next)
     const error = new Error('Not found');
     error.status = 404;
     next(error);

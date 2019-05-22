@@ -5,7 +5,7 @@ import './App.css';
 import './styles/style.sass';
 import BoardsPage from './components/boards/';
 import ListsPage from './components/b/';
-/*import Header from './components/header/';*/
+import Header from './components/header/';
 import SignUp from './components/signup/';
 import LogIn from './components/login/';
 
@@ -13,8 +13,9 @@ import LogIn from './components/login/';
 class App extends Component {
   render() {
     return (<>
-      
+      <Header/>
       <BrowserRouter>
+        
         <div className="App">
           <Route path='/boards' component={BoardsPage}/>
           <Route path='/b/:id' component={ListsPage}/>

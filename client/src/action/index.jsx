@@ -63,8 +63,10 @@ export const fetchLogIn = (data) => {
     .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{
+      console.log(cb)
+      alert(cb)
       dispatch(authSuccess(cb));
-      window.location.href = "http://localhost:3000/boards"   
+      window.location.href = "http://localhost:3000/boards/"+ cb.adressName
     })
     .catch((err)=>{
       console.log(err)
