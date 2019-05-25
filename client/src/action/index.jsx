@@ -7,6 +7,9 @@ export const addBoardsArray = (payload) => {
 export const addCard = (payload) => {
   return {type: "ADD_CARD", payload}
 }
+export const deleteCard = (payload) => {
+  return {type: "DELETE_CARD", payload}
+}
 export const addCardsArray = (payload) => {
   return {type: "ADD_CARDS_ARRAY", payload}
 }
@@ -63,7 +66,7 @@ export const fetchLogIn = (data) => {
     .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{
-      console.log(cb)
+      
       alert(cb)
       dispatch(authSuccess(cb));
       window.location.href = "http://localhost:3000/boards/"+ cb.adressName
@@ -90,6 +93,25 @@ export const deleteListRequest = (data) => {
     .then((res)=>res.json())
     .then((cb)=>{
       return dispatch(deleteList(data));
+    });
+  }
+};
+export const deleteCardRequest = (data) => {
+  return (dispatch) => {
+    
+    fetch('/b/deleteCard', {
+      method: "DELETE",
+      headers:{
+        'Accept': 'application/json, text/plain',
+        'Content-type':'application/json',
+        'Authorization': `bearer ${localStorage.getItem("token")}` 
+      },
+      body: JSON.stringify(data)
+    })
+    .then((res)=>checkStatus(res))
+    .then((res)=>res.json())
+    .then((cb)=>{
+      return dispatch(deleteCard(data));
     });
   }
 };

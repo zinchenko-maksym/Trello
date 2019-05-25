@@ -42,6 +42,7 @@ export default connect(
      dispatch => ({
 
         onAddCard: (cn, id)=> {
+          console.log(cn, id)
           dispatch(sendCardToServer({cardName : cn, listId:id}));
        }
      })

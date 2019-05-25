@@ -3,6 +3,10 @@ import {connect} from 'react-redux';
 import List from './list';
 import AddList from './addList';
 import {requestCardsAndLists} from '../../action'
+
+import { DragDropContext } from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
+
 class ListMenu extends Component {
 	constructor(props){
 		super();
@@ -31,7 +35,7 @@ class ListMenu extends Component {
     	);
   	}
 }
-
+ListMenu = DragDropContext(HTML5Backend)(ListMenu);
 export default connect(
      state => ({
      	myStore: state

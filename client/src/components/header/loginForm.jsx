@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+/*import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {fetchLogin} from '../../action'
 
@@ -69,3 +69,4 @@ export default connect(
        }
      })
      )(LoginForm);
+*/

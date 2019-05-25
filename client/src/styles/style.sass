@@ -95,7 +95,7 @@
 		flex: none
 		background-color: green
 		margin: 10px
-		min-height: 170px
+		
 		
 .add-list
 	display: -webkit-flex
@@ -106,17 +106,22 @@
 	background-color: #459
 	margin: 10px
 	flex-flow: row wrap
+	height: 130px
+	&-title
+		font: normal  18px sans-serif
 	&__item
 		width: 100%
 
 
 .list
+
 	display: -webkit-flex
 	display: -moz-flex
 	display: -ms-flex
 	display: -o-flex
 	display: flex
 	flex-flow: row wrap
+	min-height: 170px
 	&__item
 		display: -webkit-flex
 		display: -moz-flex
@@ -131,14 +136,20 @@
 		flex: none
 		background-color: green
 		margin: 10px
+		height: 30px
+
 
 .list-title
 	flex-grow: 3
 	max-width: 176px
 	overflow: hidden
-.add-card
+.add-card-field
+	display: -webkit-flex
+	display: -moz-flex
+	display: -ms-flex
+	display: -o-flex
 	display: flex
-	width: 200px
+	margin: 16px
 .delete-list
 	color: red
 	border-radius: 5px
@@ -147,4 +158,11 @@
 	cursor: pointer
 	&:hover
 		box-shadow: 0 0 10px rgba(0,0,0,0.5)
+
+.card
+	background-color: #4dace2
+	border-radius: 3px
+	cursor: pointer
+	
+
 		

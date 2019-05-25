@@ -122,7 +122,18 @@ exports.delete_all_lists=(req, res, next) => {
     
 }
 
-
+exports.delete_card= (req, res, next) => {
+    Card.deleteOne({_id: req.body.cardId})
+        .exec()
+        .then(doc => {
+        res.status(200).json(doc);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({error: err})
+        }); 
+    
+}
 exports.delete_all_cards= (req, res, next) => {
     
     Card.deleteMany({})

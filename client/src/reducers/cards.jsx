@@ -14,7 +14,9 @@ const cards = (state = initialState, action) => {
         ...state,
         ...action.payload
       ]
-      	
+    case 'DELETE_CARD':
+      const cardId = action.payload.cardId;
+      return state.filter(card => card._id !== cardId)
     default:
       return state
   }

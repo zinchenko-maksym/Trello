@@ -4,9 +4,10 @@ const Board = require('../models/board')
 
 
 exports.boards_get_all = (req, res, next) => {
-    Board.find({user: req.params.userid})
+    Board.find({user: req.params.username})
         .exec()
         .then(doc => {
+            console.log(req.params.username, doc)
         res.status(200).json({
             boards: doc
             });
@@ -19,11 +20,11 @@ exports.boards_get_all = (req, res, next) => {
 }
 
 exports.boards_create_board = (req, res, next) => {
-    console.log(req.params.userid)
+    console.log(req.params.userName)
    const board = new Board({
         _id: new mongoose.Types.ObjectId(),
         boardName: req.body.boardName,
-        user : req.params.userid
+        user : req.params.userName
     });
     board
         .save()
