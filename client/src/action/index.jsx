@@ -29,6 +29,7 @@ export const authFailed = (payload) => {
   return {type: "AUTH_FAILED", payload}
 }
 
+
 export const fetchSignUp = (data) => {
   return (dispatch) => {
     fetch('/user/signup', {
@@ -77,44 +78,8 @@ export const fetchLogIn = (data) => {
     });
   }
 };
-export const deleteListRequest = (data) => {
-  return (dispatch) => {
-    
-    fetch('/b/deleteList', {
-      method: "DELETE",
-      headers:{
-        'Accept': 'application/json, text/plain',
-        'Content-type':'application/json',
-        'Authorization': `bearer ${localStorage.getItem("token")}` 
-      },
-      body: JSON.stringify(data)
-    })
-    .then((res)=>checkStatus(res))
-    .then((res)=>res.json())
-    .then((cb)=>{
-      return dispatch(deleteList(data));
-    });
-  }
-};
-export const deleteCardRequest = (data) => {
-  return (dispatch) => {
-    
-    fetch('/b/deleteCard', {
-      method: "DELETE",
-      headers:{
-        'Accept': 'application/json, text/plain',
-        'Content-type':'application/json',
-        'Authorization': `bearer ${localStorage.getItem("token")}` 
-      },
-      body: JSON.stringify(data)
-    })
-    .then((res)=>checkStatus(res))
-    .then((res)=>res.json())
-    .then((cb)=>{
-      return dispatch(deleteCard(data));
-    });
-  }
-};
+
+
 export const sendBoardToServer = (data) => {
   let adress= /boards\/([a-z1-9]+)/.exec(window.location.href) 
   return (dispatch) => {
@@ -133,6 +98,37 @@ export const sendBoardToServer = (data) => {
     .then((cb)=>{
       
       return dispatch(addBoard(cb.boards));
+    });
+  }
+};
+
+
+export const requestBoardsList = (data) => {
+  let adress= /boards\/([a-z1-9]+)/.exec(window.location.href) 
+  console.log(`boardspage/${adress[1]}`)
+  return (dispatch) => {
+     
+    fetch(`getboards/${adress[1]}`)
+    .then((res)=>checkStatus(res))
+    .then((res)=>res.json())
+    .then((cb)=>{
+      
+      return dispatch(addBoardsArray(cb.boards));
+    });
+  }
+};
+
+//List
+export const requestCardsAndLists = (data) => {
+  let adress= /b\/([a-z1-9]+)/.exec(window.location.href) 
+  console.log(adress[1])
+  return (dispatch) => {
+    fetch(adress[1])
+    .then((res)=>checkStatus(res))
+    .then((res)=>res.json())
+    .then((cb)=>{
+      
+      return dispatch(addListsArray(cb.lists));
     });
   }
 };
@@ -157,8 +153,30 @@ export const sendListToServer = (data) => {
     });
   }
 };
-export const sendCardToServer = (data) => {
+export const deleteListRequest = (data) => {
   return (dispatch) => {
+    
+    fetch('/b/deleteList', {
+      method: "DELETE",
+      headers:{
+        'Accept': 'application/json, text/plain',
+        'Content-type':'application/json',
+        'Authorization': `bearer ${localStorage.getItem("token")}` 
+      },
+      body: JSON.stringify(data)
+    })
+    .then((res)=>checkStatus(res))
+    .then((res)=>res.json())
+    .then((cb)=>{
+      return dispatch(deleteList(data));
+    });
+  }
+};
+//Card
+export const sendCardToServer = (data) => {
+
+  return (dispatch) => {
+    console.log(data)
     fetch('/b/newCard', {
       method: "POST",
       headers:{
@@ -171,38 +189,31 @@ export const sendCardToServer = (data) => {
     .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{
-      return dispatch(addCard(cb.card));
+      console.log(cb.card)
+      return dispatch(addCard(cb));
     });
   }
 };
-export const requestBoardsList = (data) => {
-  let adress= /boards\/([a-z1-9]+)/.exec(window.location.href) 
-  console.log(`boardspage/${adress[1]}`)
+export const deleteCardRequest = (data) => {
   return (dispatch) => {
-     
-    fetch(`getboards/${adress[1]}`)
+    
+    fetch('/b/deleteCard', {
+      method: "DELETE",
+      headers:{
+        'Accept': 'application/json, text/plain',
+        'Content-type':'application/json',
+        'Authorization': `bearer ${localStorage.getItem("token")}` 
+      },
+      body: JSON.stringify(data)
+    })
     .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{
-      
-      return dispatch(addBoardsArray(cb.boards));
+      return dispatch(deleteCard(data));
     });
   }
 };
-export const requestCardsAndLists = (data) => {
-  let adress= /b\/([a-z1-9]+)/.exec(window.location.href) 
-  console.log(adress[1])
-  return (dispatch) => {
-    fetch(adress[1])
-    .then((res)=>checkStatus(res))
-    .then((res)=>res.json())
-    .then((cb)=>{
-      
-       dispatch(addListsArray(cb.lists));
-      return dispatch(addCardsArray(cb.cards))
-    });
-  }
-};
+
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {

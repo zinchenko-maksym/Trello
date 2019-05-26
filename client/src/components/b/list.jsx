@@ -18,7 +18,6 @@ const targetReact = {
     const item = monitor.getItem() 
     return true
   },
-  
 
   hover(props, monitor, component) {
     
@@ -45,7 +44,6 @@ const targetReact = {
 
 function collect(connect, monitor) {
   return {
-    
     connectDropTarget: connect.dropTarget(),
     hovered: monitor.isOver(),
     isOver: monitor.isOver(),
@@ -81,13 +79,10 @@ class List extends Component {
       this.props.onAddCard(card.name, listId)
     }
     returnPreview(){
-      let cardsArr=this.props.myStore.cards
+      let cardsArr=this.props.cards
       let arr=cardsArr.map((card)=>
         {  
-          
-          if(card.listId===this.props.id)
-
-          {return <Preview key={card._id} id={card._id}  name={card.cardName}/>}
+          return <Preview key={card._id} id={card._id}  name={card.cardName}/>
           return null
         }
         )
@@ -95,6 +90,7 @@ class List extends Component {
       return arr
     }
     returnCards(){
+
       let cardsArr=this.props.myStore.cards
       let arr=cardsArr.map((card)=>
         {  

@@ -10,6 +10,7 @@ const cards = (state = initialState, action) => {
         action.payload
             ];
     case 'ADD_CARDS_ARRAY':
+    
       return [
         ...state,
         ...action.payload

@@ -22,7 +22,7 @@ class ListMenu extends Component {
 
 		let arr= listsArr.map((list)=>{
      
-      return <List key={list._id} id={list._id}  name={list.listName}/>})
+      return <List key={list._id} id={list._id}  name={list.listName} cards={list.cards}/>})
       
 		return arr
 	}

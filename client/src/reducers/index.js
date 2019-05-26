@@ -7,7 +7,7 @@ import lists from './lists'
 import auth from './auth'
 const combReducers = combineReducers({
 	boards,
-	cards,
+/*	cards,*/
 	lists,
 	auth
 })

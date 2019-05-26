@@ -5,7 +5,7 @@ const listSchema=mongoose.Schema({
 	listName: String,
 	cards:[{
 		_id: mongoose.Schema.Types.ObjectId,
-		CardName: String
+		cardName: String
 	}],
 	boardId: String
 });

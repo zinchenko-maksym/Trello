@@ -23,19 +23,15 @@ exports.find_list_by_id = (req, res, next) => {
 }
 
 exports.get_all_lists = (req, res, next) => { 
-     Card.find({})
+    List.find({boardId: req.params.boardId}, function (err, docs) {})
         .exec()
-        .then(cards => {
-
-            List.find({},function (err, docs) {})
-            .exec()
-            .then(lists => {
-                res.status(200).json({
-                    lists: lists,
-                    cards: cards
-                });
-            })
+        .then(lists => {
+            
+            res.status(200).json({
+                lists: lists
+            });
         })
+
         .catch(err => {
             console.log(err);
             res.status(500).json({error: err})
@@ -46,24 +42,25 @@ exports.get_all_lists = (req, res, next) => {
 
 exports.add_card =(req, res, next) => {
 
-        
+    let card={"_id": new mongoose.Types.ObjectId(),
+        "cardName": req.body.cardName}
+    List.findByIdAndUpdate(req.body.listId, 
+        {$push: {cards: card}},
+        {new: true},
+        function (error, result){
+            console.log(result)
+            if (error) {
+                console.log(error);
+                res.status(500).json({error: err})
+            } else if(result){
+                res.status(200).json({
+                    card: result.cards[result.cards.length-1],
+                    listId: result._id
+                })
+            }
+        }
+    )
 
-    const card = new Card({
-        _id: new mongoose.Types.ObjectId(),
-        cardName: req.body.cardName,
-        listId: req.body.listId
-    });
-    card
-        .save()
-        .then((result)=> {
-            res.status(201).json({
-                card: result
-            });
-        })
-        .catch(err => {    
-            console.log(err);
-            res.status(500).json({error: err})
-        }); 
 }
 
 
@@ -90,9 +87,6 @@ exports.add_list =(req, res, next) => {
 
 
 exports.delete_list= (req, res, next) => {
-
-    Card.remove({list: req.body.listId})
-        .exec()
     List.deleteOne({_id: req.body.listId})
         .exec()
         .then(doc => {
@@ -122,7 +116,7 @@ exports.delete_all_lists=(req, res, next) => {
     
 }
 
-exports.delete_card= (req, res, next) => {
+/*exports.delete_card= (req, res, next) => {
     Card.deleteOne({_id: req.body.cardId})
         .exec()
         .then(doc => {
@@ -133,8 +127,8 @@ exports.delete_card= (req, res, next) => {
             res.status(500).json({error: err})
         }); 
     
-}
-exports.delete_all_cards= (req, res, next) => {
+}*/
+/*exports.delete_all_cards= (req, res, next) => {
     
     Card.deleteMany({})
         .exec()
@@ -148,4 +142,4 @@ exports.delete_all_cards= (req, res, next) => {
             res.status(500).json({error: err})
         }); 
     
-}
+}*/
