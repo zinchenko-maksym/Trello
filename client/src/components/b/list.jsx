@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import Card from './card';
 import DeleteListButton from './deleteListButton';
 import AddCardField from './addCardField';
-import Preview from './preview';
 import HTML5Backend from "react-dnd-html5-backend";
 import {sendCardToServer, deleteCardRequest} from '../../action'
 
@@ -54,7 +53,6 @@ class List extends Component {
       this.changeAddCardMenu=this.changeAddCardMenu.bind(this)
       this.dropCard=this.dropCard.bind(this)
       this.returnCards=this.returnCards.bind(this)
-      this.returnPreview=this.returnPreview.bind(this)
   	}
 
     changeAddCardMenu(){
@@ -64,30 +62,12 @@ class List extends Component {
     }
     dropCard(card, listId){
       this.props.onMoveCard(card, card.listId , listId);
-      /*this.props.onAddCard(card.name, listId)
-      this.props.onDeleteCard(card.id, card.listId)*/
-    }
-    returnPreview(){
-      let cardsArr=this.props.cards
-      let arr=cardsArr.map((card)=>
-        {  
-          return <Preview key={card._id} listId={this.props.id} id={card._id}  name={card.cardName}/>
-          return null
-        }
-        )
-      
-      return arr
     }
     returnCards(){
-
-      let cardsArr=this.props.myStore.cards
-      let arr=cardsArr.map((card)=>
+      let cardsArr=this.props.cards
+      let arr=cardsArr.map((card, i)=>
         {  
-          
-          if(card.listId===this.props.id)
-
-          {return <Card key={card._id}  name={card.cardName}/>}
-          return null
+          return <Card key={card._id} index={i} listId={this.props.id} id={card._id}  name={card.cardName}/>
         }
         )
       
@@ -115,9 +95,9 @@ class List extends Component {
             <DeleteListButton listId={this.props.id}/>
           </h3>
           
-          
+          {this.returnCards()}
           {this.addCardMenu()}
-          {this.returnPreview()}
+          
   	    </div>
         
       
