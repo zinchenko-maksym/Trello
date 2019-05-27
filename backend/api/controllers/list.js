@@ -26,7 +26,7 @@ exports.get_all_lists = (req, res, next) => {
     List.find({boardId: req.params.boardId}, function (err, docs) {})
         .exec()
         .then(lists => {
-            
+            console.log(req.params)
             res.status(200).json({
                 lists: lists
             });
@@ -116,8 +116,19 @@ exports.delete_all_lists=(req, res, next) => {
     
 }
 
-/*exports.delete_card= (req, res, next) => {
-    Card.deleteOne({_id: req.body.cardId})
+exports.delete_card= (req, res, next) => {
+    console.log(req.body, 101)
+    List.findOne({'_id': req.body.listId}, function (err, result){
+        if(err){
+            res.status(500).json({error: err})
+        }
+        
+        result.cards.pull({"_id": req.body.cardId}).remove();
+        result.save();
+        res.status(200).json(result);
+    })
+    
+    /*Card.deleteOne({_id: req.body.cardId})
         .exec()
         .then(doc => {
         res.status(200).json(doc);
@@ -125,9 +136,9 @@ exports.delete_all_lists=(req, res, next) => {
         .catch(err => {
             console.log(err);
             res.status(500).json({error: err})
-        }); 
+        }); */
     
-}*/
+}
 /*exports.delete_all_cards= (req, res, next) => {
     
     Card.deleteMany({})

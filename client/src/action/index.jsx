@@ -43,7 +43,6 @@ export const fetchSignUp = (data) => {
     .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{
-      console.log(cb)
       window.location.href = "http://localhost:3000/boards"               //Change to url
     })
     .catch((err)=>{
@@ -121,7 +120,7 @@ export const requestBoardsList = (data) => {
 //List
 export const requestCardsAndLists = (data) => {
   let adress= /b\/([a-z1-9]+)/.exec(window.location.href) 
-  console.log(adress[1])
+  
   return (dispatch) => {
     fetch(adress[1])
     .then((res)=>checkStatus(res))
@@ -176,7 +175,6 @@ export const deleteListRequest = (data) => {
 export const sendCardToServer = (data) => {
 
   return (dispatch) => {
-    console.log(data)
     fetch('/b/newCard', {
       method: "POST",
       headers:{
@@ -189,14 +187,14 @@ export const sendCardToServer = (data) => {
     .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{
-      console.log(cb.card)
       return dispatch(addCard(cb));
     });
   }
 };
+
 export const deleteCardRequest = (data) => {
+  
   return (dispatch) => {
-    
     fetch('/b/deleteCard', {
       method: "DELETE",
       headers:{

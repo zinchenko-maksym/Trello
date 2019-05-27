@@ -10,7 +10,8 @@ const cardSource = {
 		
 		const item = { 
 			name: props.name,
-			id: props.id
+			id: props.id,
+			listId: props.listId
 		 }
 		return item
 	},
@@ -47,6 +48,7 @@ class Preview extends Component {
 			return name
 		}
 	render() {
+
 		const { isDragging, connectDragSource } = this.props
 		const opacity = isDragging ? 0 : 1;
 		return connectDragSource(

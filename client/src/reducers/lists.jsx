@@ -1,5 +1,4 @@
-const initialState = [{_id: "5cd77e2f1150f42f71a4c0f", listName: "123", boardId:"5cb74d41b1", 
-  cards:[{_id:"5cc4c54bf3fa9bd4ac26a2", cardName: "ds"}, {_id:"5cc4c54bf3fa9bd4ac26a2a", cardName: "dsaa"}]}];
+const initialState = [];
 
 
 const lists = (state = initialState, action) => {
@@ -10,19 +9,15 @@ const lists = (state = initialState, action) => {
         action.payload
       ];
       case 'ADD_CARD':
-      /*console.log(state.find((value, index)=>{
-        if(value._id===action.payload.listId){
-          state[index].cards.push(action.payload.card)
-        }
-
-      }
-
-        ), 4)*/
-      let foundIndex = state.findIndex(list => list._id===action.payload.listId);
-      state[foundIndex].cards.push(action.payload.card);
-      console.log(state)
+        let foundIndex = state.findIndex(list => list._id===action.payload.listId);
+        state[foundIndex].cards.push(action.payload.card);
+        
+        return [...state];
+    case 'DELETE_CARD':
+      let foundListIndex = state.findIndex(list => list._id===action.payload.listId);
+      let foundCardIndex = state[foundListIndex].cards.findIndex(card => card._id===action.payload.cardId);
+      state[foundListIndex].cards.splice(foundCardIndex,1)
       return [...state];
-
 
 
     case 'DELETE_LIST':

@@ -14,28 +14,16 @@ import { findDOMNode } from 'react-dom' //can delete
 const targetReact = {
 
   canDrop(props, monitor, component) {
-   
     const item = monitor.getItem() 
     return true
   },
 
   hover(props, monitor, component) {
-    
     const item = monitor.getItem()
-    
-    /*const clientOffset = monitor.getClientOffset()
-    const componentRect = findDOMNode(component).getBoundingClientRect()
-
-    // You can check whether we're over a nested drop target
-    const isJustOverThisOne = monitor.isOver({ shallow: true })
-
-    // You will receive hover() even for items for which canDrop() is false
-    const canDrop = monitor.canDrop()*/
   },
 
   drop(props, monitor, component) {
-    
-    console.log(props, monitor, component, 3);
+    console.log(monitor.getItem())
     component.dropCard(monitor.getItem(), props.id);
 
     return undefined
@@ -75,14 +63,15 @@ class List extends Component {
             })
     }
     dropCard(card, listId){
-      this.props.onDeleteCard(card.id)
-      this.props.onAddCard(card.name, listId)
+      this.props.onMoveCard(card, card.listId , listId);
+      /*this.props.onAddCard(card.name, listId)
+      this.props.onDeleteCard(card.id, card.listId)*/
     }
     returnPreview(){
       let cardsArr=this.props.cards
       let arr=cardsArr.map((card)=>
         {  
-          return <Preview key={card._id} id={card._id}  name={card.cardName}/>
+          return <Preview key={card._id} listId={this.props.id} id={card._id}  name={card.cardName}/>
           return null
         }
         )
@@ -143,13 +132,9 @@ export default connect(
        myStore: state
      }),
      dispatch => ({
-       onDeleteCard: (card)=> {
-
-          dispatch(deleteCardRequest({cardId: card}));
-       },
-        onAddCard: (cn, id)=> {
-          console.log(cn, id)
-          dispatch(sendCardToServer({cardName : cn, listId:id}));
-        }
+       onMoveCard: (card, sourceList, targetList)=> {
+          dispatch(sendCardToServer({cardName : card.name, listId: targetList}));
+          dispatch(deleteCardRequest({cardId: card.id, listId: sourceList}));
+       }
      })
-     )(List);
+)(List);
