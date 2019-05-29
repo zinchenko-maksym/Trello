@@ -20,9 +20,9 @@ class ListMenu extends Component {
 	returnLists(){
 		let listsArr=this.props.myStore.lists
 
-		let arr= listsArr.map((list)=>{
+		let arr= listsArr.map((list, index)=>{
      
-      return <List key={list._id} id={list._id}  name={list.listName} cards={list.cards}/>})
+      return <List key={list._id} id={list._id} index={index}  name={list.listName} cards={list.cards}/>})
       
 		return arr
 	}

@@ -28,7 +28,9 @@ export const authSuccess = (payload) => {
 export const authFailed = (payload) => {
   return {type: "AUTH_FAILED", payload}
 }
-
+export const moveCard = (payload) => {
+  return {type: "MOVE_CARD", payload}
+}
 
 export const fetchSignUp = (data) => {
   return (dispatch) => {

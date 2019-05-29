@@ -1,6 +1,56 @@
 import React, { Component } from 'react';
-import { DragSource } from 'react-dnd';
+import { DragSource, DropTarget} from 'react-dnd';
+import { compose } from 'redux'
+import {connect} from 'react-redux';
+import { findDOMNode } from 'react-dom';
+import {moveCard} from '../../action'
 
+
+const cardTarget = {
+
+  canDrop(props, monitor, component) {
+    const item = monitor.getItem() 
+    return true
+  },
+
+  hover(props, monitor, component) {
+
+    const item = monitor.getItem()
+    const dragIndex = monitor.getItem().index;
+	const hoverIndex = props.index;
+	const sourceListId = monitor.getItem().listId;	
+
+	if (dragIndex === hoverIndex) {
+		return;
+	}
+
+	const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
+	const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+	const clientOffset = monitor.getClientOffset();
+	const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+	if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+
+		component.moveCard(item.listId, item.index, component.props.index);
+		monitor.getItem().index = hoverIndex;
+		return;
+	}
+
+	if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+		component.moveCard(item.listId, item.index, component.props.index);
+		monitor.getItem().index = hoverIndex;
+		return;
+	}
+	if ( props.listId === sourceListId ) {
+		monitor.getItem().index = hoverIndex;
+	}
+	
+  },
+
+  drop(props, monitor, component) {
+    const { id, name, index } = props;
+    return undefined
+  }
+}
 const cardSource = {
 	isDragging(props, monitor) {
 		return monitor.getItem().id === props.id
@@ -9,8 +59,9 @@ const cardSource = {
 	beginDrag(props, monitor, component) {
 		
 		const item = { 
-			name: props.name,
 			id: props.id,
+			index: props.index,
+			name: props.name,
 			listId: props.listId
 		 }
 		return item
@@ -21,26 +72,44 @@ const cardSource = {
 		if (!monitor.didDrop()) {
 			return 
 		}
-
 		const item = monitor.getItem()
 		const dropResult = monitor.getDropResult()
-		return 0
+
+		
 	},
 }
 
-function collect(connect, monitor) {
+function dragCollect(connect, monitor) {
 	return {
-		// Call this function inside render()
-		// to let React DnD handle the drag events:
 		connectDragSource: connect.dragSource(),
 		connectDragPreview: connect.dragPreview(),
-		// You can ask the monitor about the current drag state:
 		isDragging: monitor.isDragging(),
 	}
 }
+function dropCollect(connect, monitor) {
+	return {
+	    connectDropTarget: connect.dropTarget(),
+	    isOver: monitor.isOver(),
+	    isOverCurrent: monitor.isOver({ shallow: true }),
+	    canDrop: monitor.canDrop(),
+	    itemType: monitor.getItemType(),
+  }
+}
 
-class Preview extends Component {
+class Card extends Component {
+	constructor(props)  {
+    	super();
+    	this.moveCard=this.moveCard.bind(this)
 
+  	}
+  	moveCard(listId, sourseCardIndex, targetCardIndex){
+  		
+  		let listIndex = this.props.myStore.lists.findIndex(list => list._id===listId);
+  		
+  		let sourseCard = this.props.myStore.lists[listIndex].cards[sourseCardIndex];
+  		sourseCard.index= sourseCardIndex;
+  		this.props.onMoveCard(listIndex, sourseCard, targetCardIndex);
+  	}
 	cutCardName(name) {
 			if(name.length>10){
 				return name.slice(0, 24).concat("...")
@@ -48,20 +117,29 @@ class Preview extends Component {
 			return name
 		}
 	render() {
-
-		const { isDragging, connectDragSource } = this.props
+		const { isDragging, connectDragSource, connectDropTarget  } = this.props
 		const opacity = isDragging ? 0 : 1;
-		return connectDragSource(
+		return connectDragSource(connectDropTarget(
 			<div className="list__item card" style={{opacity}}>
 				{this.cutCardName(this.props.name)}
 			</div>
-			)
-		/*return (
-			<div className="list__item card">
-				{this.cutCardName(this.props.name)}
-			</div>
-		);*/
+			))
+
 	}
 }
+Card = DropTarget('card', cardTarget, dropCollect)(Card);
+export default compose(
+	
+	DragSource('card', cardSource, dragCollect),
+	connect(state => ({
+       myStore: state
+     }),
+	dispatch => ({
 
-export default DragSource('card', cardSource, collect)(Preview)
+       onMoveCard: (listIndex, sourseCard, targetCardIndex)=> {
+
+          dispatch(moveCard({ listIndex: listIndex, sourseCard: sourseCard, targetCardIndex: targetCardIndex}));
+       }
+     })
+	)
+)(Card);

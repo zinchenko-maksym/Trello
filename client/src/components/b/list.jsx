@@ -3,16 +3,15 @@ import {connect} from 'react-redux';
 import Card from './card';
 import DeleteListButton from './deleteListButton';
 import AddCardField from './addCardField';
-import HTML5Backend from "react-dnd-html5-backend";
 import {sendCardToServer, deleteCardRequest} from '../../action'
 
-import { DropTarget } from 'react-dnd'
-
-import { findDOMNode } from 'react-dom' //can delete
+import HTML5Backend from "react-dnd-html5-backend";
+import { DropTarget } from 'react-dnd';
 
 const targetReact = {
 
   canDrop(props, monitor, component) {
+
     const item = monitor.getItem() 
     return true
   },
@@ -22,8 +21,9 @@ const targetReact = {
   },
 
   drop(props, monitor, component) {
-    console.log(monitor.getItem())
-    component.dropCard(monitor.getItem(), props.id);
+    const { id, name, index } = props;
+    console.log(component)
+    /*component.dropCard(monitor.getItem(), props.id);*/
 
     return undefined
   }
@@ -54,6 +54,11 @@ class List extends Component {
       this.dropCard=this.dropCard.bind(this)
       this.returnCards=this.returnCards.bind(this)
   	}
+
+
+
+
+
 
     changeAddCardMenu(){
       this.setState({
