@@ -17,6 +17,7 @@ const lists = (state = initialState, action) => {
       let listId = action.payload.listId;
       return [...state.filter(list => list._id !== listId)];
     case 'ADD_CARD':
+    console.log(action.payload)
       let foundIndex = state.findIndex(list => list._id===action.payload.listId);
       state[foundIndex].cards.push(action.payload.card);
       return [...state];
@@ -28,8 +29,12 @@ const lists = (state = initialState, action) => {
     case 'MOVE_CARD':
       state[action.payload.listIndex].cards.splice(action.payload.sourseCard.index, 1);
       state[action.payload.listIndex].cards.splice(action.payload.targetCardIndex, 0, {'_id': action.payload.sourseCard._id, 'cardName': action.payload.sourseCard.cardName});
-      
       return [...state]
+    case 'MOVE_CARD_TO_LIST':
+      state[action.payload.listIndex].cards.splice(action.payload.sourseCard.index, 1);
+      state[action.payload.listIndex].cards.splice(action.payload.targetCardIndex, 0, {'_id': action.payload.sourseCard._id, 'cardName': action.payload.sourseCard.cardName});
+      return [...state]
+    
     default:
       return state 
   }

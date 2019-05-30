@@ -19,17 +19,17 @@ const cardTarget = {
     const dragIndex = monitor.getItem().index;
 	const hoverIndex = props.index;
 	const sourceListId = monitor.getItem().listId;	
-
-	if (dragIndex === hoverIndex) {
-		return;
-	}
-
+	
 	const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
 	const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 	const clientOffset = monitor.getClientOffset();
 	const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-	if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+	
+	if (dragIndex === hoverIndex) {
+		return;
 
+	}
+	if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
 		component.moveCard(item.listId, item.index, component.props.index);
 		monitor.getItem().index = hoverIndex;
 		return;
@@ -39,9 +39,6 @@ const cardTarget = {
 		component.moveCard(item.listId, item.index, component.props.index);
 		monitor.getItem().index = hoverIndex;
 		return;
-	}
-	if ( props.listId === sourceListId ) {
-		monitor.getItem().index = hoverIndex;
 	}
 	
   },
@@ -53,7 +50,8 @@ const cardTarget = {
 }
 const cardSource = {
 	isDragging(props, monitor) {
-		return monitor.getItem().id === props.id
+		return monitor.getItem().id === props.id;
+
 	},
 
 	beginDrag(props, monitor, component) {
@@ -103,9 +101,8 @@ class Card extends Component {
 
   	}
   	moveCard(listId, sourseCardIndex, targetCardIndex){
-  		
+
   		let listIndex = this.props.myStore.lists.findIndex(list => list._id===listId);
-  		
   		let sourseCard = this.props.myStore.lists[listIndex].cards[sourseCardIndex];
   		sourseCard.index= sourseCardIndex;
   		this.props.onMoveCard(listIndex, sourseCard, targetCardIndex);
@@ -118,9 +115,9 @@ class Card extends Component {
 		}
 	render() {
 		const { isDragging, connectDragSource, connectDropTarget  } = this.props
-		const opacity = isDragging ? 0 : 1;
+		const display = isDragging ? 'none' : 'block';
 		return connectDragSource(connectDropTarget(
-			<div className="list__item card" style={{opacity}}>
+			<div className="list__item card" style={{display}}>
 				{this.cutCardName(this.props.name)}
 			</div>
 			))
@@ -137,8 +134,8 @@ export default compose(
 	dispatch => ({
 
        onMoveCard: (listIndex, sourseCard, targetCardIndex)=> {
-
-          dispatch(moveCard({ listIndex: listIndex, sourseCard: sourseCard, targetCardIndex: targetCardIndex}));
+       	console.log('moveCard')
+        dispatch(moveCard({ listIndex: listIndex, sourseCard: sourseCard, targetCardIndex: targetCardIndex}));
        }
      })
 	)

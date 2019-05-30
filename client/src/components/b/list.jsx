@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import Card from './card';
 import DeleteListButton from './deleteListButton';
 import AddCardField from './addCardField';
-import {sendCardToServer, deleteCardRequest} from '../../action'
+import {sendCardToServer, deleteCardRequest, addCard, deleteCard} from '../../action'
 
 import HTML5Backend from "react-dnd-html5-backend";
 import { DropTarget } from 'react-dnd';
@@ -11,20 +11,26 @@ import { DropTarget } from 'react-dnd';
 const targetReact = {
 
   canDrop(props, monitor, component) {
-
+    
     const item = monitor.getItem() 
     return true
   },
 
   hover(props, monitor, component) {
-    const item = monitor.getItem()
+
+    const item = monitor.getItem();
+    if(item.listId!==props.id){
+      component.moveCardToAnotherList({_id: item.id, cardName: item.name}, props.id, item.listId);
+      item.listId=props.id;
+      console.log('1', item)
+      item.index=props.cards.length-1
+      console.log('2', item)
+    }
+    
   },
 
   drop(props, monitor, component) {
     const { id, name, index } = props;
-    console.log(component)
-    /*component.dropCard(monitor.getItem(), props.id);*/
-
     return undefined
   }
 }
@@ -49,14 +55,17 @@ class List extends Component {
       this.state={
         addingCard: false
       }
-      this.addCardMenu=this.addCardMenu.bind(this)
-      this.changeAddCardMenu=this.changeAddCardMenu.bind(this)
-      this.dropCard=this.dropCard.bind(this)
-      this.returnCards=this.returnCards.bind(this)
+      this.addCardMenu=this.addCardMenu.bind(this);
+      this.changeAddCardMenu=this.changeAddCardMenu.bind(this);
+      this.dropCard=this.dropCard.bind(this);
+      this.returnCards=this.returnCards.bind(this);
+      this.moveCardToAnotherList=this.moveCardToAnotherList.bind(this);
   	}
 
 
-
+    moveCardToAnotherList(card, targetListId, sourceListId){
+        this.props.onMoveCardToAnotherList(card, targetListId, sourceListId)
+      }
 
 
 
@@ -117,6 +126,12 @@ export default connect(
        myStore: state
      }),
      dispatch => ({
+
+       onMoveCardToAnotherList: (card, targetListId, sourceListId)=> {
+         console.log('onMoveCardToAnotherList')
+          dispatch(addCard({card : card, listId: targetListId}));
+          dispatch(deleteCard({cardId : card._id, listId: sourceListId}));
+       },
        onMoveCard: (card, sourceList, targetList)=> {
           dispatch(sendCardToServer({cardName : card.name, listId: targetList}));
           dispatch(deleteCardRequest({cardId: card.id, listId: sourceList}));
