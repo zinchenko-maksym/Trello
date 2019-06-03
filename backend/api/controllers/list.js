@@ -48,7 +48,6 @@ exports.add_card =(req, res, next) => {
         {$push: {cards: card}},
         {new: true},
         function (error, result){
-            console.log(result)
             if (error) {
                 console.log(error);
                 res.status(500).json({error: err})
@@ -62,7 +61,24 @@ exports.add_card =(req, res, next) => {
     )
 
 }
+exports.update_list_cards=(req, res, next) => {
+    List.findByIdAndUpdate(req.body.listId, 
+        {$set: {cards: req.body.cards}},
+        function (error, result){
+            if (error) {
+                console.log(error);
+                res.status(500).json({error: err})
+            } else if(result){
+                res.status(200).json({
+                    card: result.cards,
+                    listId: result._id
+                })
+            }
+        }
+    )
 
+     
+}
 
 exports.add_list =(req, res, next) => {
     const id= req.params.boardId;
@@ -117,7 +133,6 @@ exports.delete_all_lists=(req, res, next) => {
 }
 
 exports.delete_card= (req, res, next) => {
-    console.log(req.body, 101)
     List.findOne({'_id': req.body.listId}, function (err, result){
         if(err){
             res.status(500).json({error: err})

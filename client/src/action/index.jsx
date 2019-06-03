@@ -122,13 +122,12 @@ export const requestBoardsList = (data) => {
 //List
 export const requestCardsAndLists = (data) => {
   let adress= /b\/([a-z1-9]+)/.exec(window.location.href) 
-  
+  console.log(adress[1])
   return (dispatch) => {
     fetch(adress[1])
     .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{
-      
       return dispatch(addListsArray(cb.lists));
     });
   }
@@ -149,12 +148,31 @@ export const sendListToServer = (data) => {
     .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{
-      
-      return dispatch(addList(cb.list));
+      return 
     });
   }
 };
+export const sendChangedList = (data) => {
+  console.log(data, 6)
+  return (dispatch) => {  
+    fetch('/b/updatecards', {
+      method: "POST",
+      headers:{
+        'Accept': 'application/json, text/plain',
+        'Content-type':'application/json',
+        'Authorization': `bearer ${localStorage.getItem("token")}` 
+      },
+      body: JSON.stringify(data)
+    })
+    .then((res)=>checkStatus(res))
+    .then((res)=>res.json())
+    .then((cb)=>{
+      return 0
+    });
+  }
+}
 export const deleteListRequest = (data) => {
+  console.log(99)
   return (dispatch) => {
     
     fetch('/b/deleteList', {
@@ -175,7 +193,6 @@ export const deleteListRequest = (data) => {
 };
 //Card
 export const sendCardToServer = (data) => {
-
   return (dispatch) => {
     fetch('/b/newCard', {
       method: "POST",
@@ -195,7 +212,7 @@ export const sendCardToServer = (data) => {
 };
 
 export const deleteCardRequest = (data) => {
-  
+  console.log(data, 73)
   return (dispatch) => {
     fetch('/b/deleteCard', {
       method: "DELETE",
@@ -209,7 +226,7 @@ export const deleteCardRequest = (data) => {
     .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{
-      return dispatch(deleteCard(data));
+      return 0
     });
   }
 };

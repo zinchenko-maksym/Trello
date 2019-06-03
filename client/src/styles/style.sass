@@ -1,5 +1,10 @@
+
+
 //Board page
+body
+	background-color: orange
 .boards-menu
+
 	display: -webkit-flex
 	display: -moz-flex
 	display: -ms-flex
@@ -87,13 +92,11 @@
 		display: -ms-flex
 		display: -o-flex
 		display: flex
-		align-items: center
-		justify-content: space-around
-		border-radius: 8px
+		border-radius: 3px
 		width: 220px
 		flex-grow: 1
 		flex: none
-		background-color: green
+		background-color: #dfe1e6
 		margin: 10px
 		
 		
@@ -114,14 +117,10 @@
 
 
 .list
-
-	display: -webkit-flex
-	display: -moz-flex
-	display: -ms-flex
-	display: -o-flex
-	display: flex
-	flex-flow: row wrap
 	min-height: 170px
+	height: auto
+	flex-direction: column
+	justify-content: flex-start
 	&__item
 		display: -webkit-flex
 		display: -moz-flex
@@ -129,14 +128,12 @@
 		display: -o-flex
 		display: flex
 		align-items: center
-		justify-content: space-around
-		
-		width: 200px
+		width: 190px
 		flex-grow: 1
 		flex: none
-		background-color: green
-		margin: 10px
+		margin: 5px
 		height: 30px
+		padding: 0px 10px
 
 
 .list-title
@@ -150,17 +147,22 @@
 	display: -o-flex
 	display: flex
 	margin: 16px
+	margin-top: auto
+
 .delete-list
 	color: red
-	border-radius: 5px
+	display: flex
+	align-items: center
+	justify-content: center
+	border-radius: 30px
 	width: 20px
 	height: 20px
 	cursor: pointer
 	&:hover
-		box-shadow: 0 0 10px rgba(0,0,0,0.5)
+		box-shadow: 0 0 10px rgba(0,0,0,0.1)
 
 .card
-	background-color: #4dace2
+	background-color: white
 	border-radius: 3px
 	cursor: pointer
 	

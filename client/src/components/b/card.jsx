@@ -9,17 +9,15 @@ import {moveCard} from '../../action'
 const cardTarget = {
 
   canDrop(props, monitor, component) {
-    const item = monitor.getItem() 
-    return true
+	return true
   },
 
   hover(props, monitor, component) {
 
-    const item = monitor.getItem()
-    const dragIndex = monitor.getItem().index;
+	const item = monitor.getItem()
+	const dragIndex = monitor.getItem().index;
 	const hoverIndex = props.index;
 	const sourceListId = monitor.getItem().listId;	
-	
 	const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
 	const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 	const clientOffset = monitor.getClientOffset();
@@ -30,13 +28,13 @@ const cardTarget = {
 
 	}
 	if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-		component.moveCard(item.listId, item.index, component.props.index);
+		component.moveCard(sourceListId, item.index, component.props.index);
 		monitor.getItem().index = hoverIndex;
 		return;
 	}
 
 	if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-		component.moveCard(item.listId, item.index, component.props.index);
+		component.moveCard(sourceListId, dragIndex, component.props.index);
 		monitor.getItem().index = hoverIndex;
 		return;
 	}
@@ -44,8 +42,7 @@ const cardTarget = {
   },
 
   drop(props, monitor, component) {
-    const { id, name, index } = props;
-    return undefined
+	return undefined
   }
 }
 const cardSource = {
@@ -55,7 +52,7 @@ const cardSource = {
 	},
 
 	beginDrag(props, monitor, component) {
-		
+		props.removeCard(props.id, props.listId)
 		const item = { 
 			id: props.id,
 			index: props.index,
@@ -68,11 +65,9 @@ const cardSource = {
 	endDrag(props, monitor, component) {
 		
 		if (!monitor.didDrop()) {
+			
 			return 
 		}
-		const item = monitor.getItem()
-		const dropResult = monitor.getDropResult()
-
 		
 	},
 }
@@ -86,27 +81,27 @@ function dragCollect(connect, monitor) {
 }
 function dropCollect(connect, monitor) {
 	return {
-	    connectDropTarget: connect.dropTarget(),
-	    isOver: monitor.isOver(),
-	    isOverCurrent: monitor.isOver({ shallow: true }),
-	    canDrop: monitor.canDrop(),
-	    itemType: monitor.getItemType(),
+		connectDropTarget: connect.dropTarget(),
+		isOver: monitor.isOver(),
+		isOverCurrent: monitor.isOver({ shallow: true }),
+		canDrop: monitor.canDrop(),
+		itemType: monitor.getItemType(),
   }
 }
 
 class Card extends Component {
 	constructor(props)  {
-    	super();
-    	this.moveCard=this.moveCard.bind(this)
+		super();
+		this.moveCard=this.moveCard.bind(this)
+	}
+	
+	moveCard(listId, sourseCardIndex, targetCardIndex){
 
-  	}
-  	moveCard(listId, sourseCardIndex, targetCardIndex){
-
-  		let listIndex = this.props.myStore.lists.findIndex(list => list._id===listId);
-  		let sourseCard = this.props.myStore.lists[listIndex].cards[sourseCardIndex];
-  		sourseCard.index= sourseCardIndex;
-  		this.props.onMoveCard(listIndex, sourseCard, targetCardIndex);
-  	}
+		let listIndex = this.props.myStore.lists.findIndex(list => list._id===listId);
+		let sourseCard = this.props.myStore.lists[listIndex].cards[sourseCardIndex];
+		sourseCard.index= sourseCardIndex;
+		this.props.onMoveCard(listIndex, sourseCard, targetCardIndex);
+	}
 	cutCardName(name) {
 			if(name.length>10){
 				return name.slice(0, 24).concat("...")
@@ -115,9 +110,9 @@ class Card extends Component {
 		}
 	render() {
 		const { isDragging, connectDragSource, connectDropTarget  } = this.props
-		const display = isDragging ? 'none' : 'block';
+		const opacity = isDragging ? 0.1 : 1;
 		return connectDragSource(connectDropTarget(
-			<div className="list__item card" style={{display}}>
+			<div className="list__item card" style={{opacity}}>
 				{this.cutCardName(this.props.name)}
 			</div>
 			))
@@ -129,14 +124,13 @@ export default compose(
 	
 	DragSource('card', cardSource, dragCollect),
 	connect(state => ({
-       myStore: state
-     }),
-	dispatch => ({
-
-       onMoveCard: (listIndex, sourseCard, targetCardIndex)=> {
-       	console.log('moveCard')
-        dispatch(moveCard({ listIndex: listIndex, sourseCard: sourseCard, targetCardIndex: targetCardIndex}));
-       }
-     })
+	   myStore: state
+	 }),
+		dispatch => ({
+			
+			onMoveCard: (listIndex, sourseCard, targetCardIndex)=> {
+				dispatch(moveCard({ listIndex: listIndex, sourseCard: sourseCard, targetCardIndex: targetCardIndex}));
+			}
+		})
 	)
 )(Card);

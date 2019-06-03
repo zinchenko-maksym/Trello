@@ -17,7 +17,6 @@ const lists = (state = initialState, action) => {
       let listId = action.payload.listId;
       return [...state.filter(list => list._id !== listId)];
     case 'ADD_CARD':
-    console.log(action.payload)
       let foundIndex = state.findIndex(list => list._id===action.payload.listId);
       state[foundIndex].cards.push(action.payload.card);
       return [...state];
