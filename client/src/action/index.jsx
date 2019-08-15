@@ -119,8 +119,6 @@ export const requestBoardsList = (data) => {
   }
 };
 export const deleteBoardRequest = (data) => {
-  let adress= "/boards"
-  console.log(`boardspage`)
   return (dispatch) => {
      fetch(`/boards/deleteBoard`, {
       method: "DELETE",

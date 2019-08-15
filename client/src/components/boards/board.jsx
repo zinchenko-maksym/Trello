@@ -22,7 +22,7 @@ class Board extends Component {
     return (
 	    <a href={`http://localhost:3000/b/${this.props.id}`} className="boards-menu__item board">
 	    	 {this.cutBoardName(this.props.name)}
-         <button type="button" onClick={this.deleteBoard} className="delete-board-btn">X</button>
+         <button type="button" onClick={this.deleteBoard} className="delete-board cancel-button"></button>
 	    </a>
     );
   }
