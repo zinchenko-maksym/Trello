@@ -8,7 +8,7 @@ const borderRoutes = require('./api/routes/boards');
 const cardListRoutes = require('./api/routes/b');
 const userRoutes = require('./api/routes/user');
 
-mongoose.connect('mongodb+srv://maklaut:MZ7145824_@trello-aktlt.mongodb.net/test?retryWrites=true', 
+mongoose.connect('mongodb+srv://maklaut:'+process.env.MONGO_ATLAS_PW+'@trello-aktlt.mongodb.net/test?retryWrites=true&w=majority', 
   {
     useNewUrlParser: true
   }
@@ -19,6 +19,7 @@ app.use(express.json());
 
 
 app.use((req, res, next) => {
+    
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
       "Access-Control-Allow-Headers", 

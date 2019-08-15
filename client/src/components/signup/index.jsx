@@ -30,18 +30,20 @@ class SignUp extends Component {
     }
 	render() {
 		return (
-			<div className="Signup">
-				Create account or 
-			<a href="http://localhost:3000/login"> log in</a>  {/*change adress*/}
-				<form onSubmit={this.handleSubmit}>
-					<div>Name</div>
-					<input type="text" name="name" onChange={this.handleChange}/>
-					<div>Email</div>
-					<input type="text" name="email" onChange={this.handleChange}/>
-					<div>Password</div>
-					<input type="text" name="password" onChange={this.handleChange}/>
-					<button >Create new account</button>
-				</form>
+			<div className="signup-page">
+				<div className="signup-page__wrapper">
+					<h1 className="signup-page-header">Create an account</h1>  
+					<a className="login-link" href="http://localhost:3000/login">or log in</a>  {/*change adress*/}
+					<form onSubmit={this.handleSubmit}>
+						<label htmlFor="name">Name</label>
+						<input className="signup-page-input" type="text" name="name" id="name" onChange={this.handleChange}/>
+						<label htmlFor="email">Email</label>
+						<input className="signup-page-input" type="email" id="email" name="email" onChange={this.handleChange}/>
+						<label htmlFor="password">Password</label>
+						<input className="signup-page-input"  type="password" id="password" name="password" onChange={this.handleChange}/>
+						<button className="signup-button">Create new account</button>
+					</form>
+				</div>
 			</div>
 		);
 	}

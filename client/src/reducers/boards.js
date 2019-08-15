@@ -13,7 +13,10 @@ const boards = (state = initialState, action) => {
           ...state,
           ...action.payload
       ]
-      	
+    case 'DELETE_BOARD':
+      let boardId = action.payload.boardId;
+      return [...state.filter(board => board._id !== boardId)];
+
     default:
       return state
   }

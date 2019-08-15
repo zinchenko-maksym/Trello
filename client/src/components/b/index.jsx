@@ -5,7 +5,7 @@ import ListsMenu from './listsMenu';
 class ListsPage extends Component {
   render() {
     return (
-      <div className="BoardsPage">
+      <div className="boards-page">
       	<ListsMenu/>
       </div>
     );

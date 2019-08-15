@@ -10,7 +10,8 @@ exports.user_get_users = (req, res, next)=>{
 		.exec()
 		.then((a)=>res.json(a))
 }
-exports.user_signup = (req, res, next) => {  
+exports.user_signup = (req, res, next) => { 
+
 	User.find({ email: req.body.email })
 		.exec()
 		.then(user => {
@@ -54,6 +55,7 @@ exports.user_signup = (req, res, next) => {
 
 
 exports.user_login = (req, res, next)=>{
+	/*console.log(process.env.MONGO_ATLAS_PW, 'mongodb+srv://maklaut:'+process.env.MONGO_ATLAS_PW+'@trello-aktlt.mongodb.net/test?retryWrites=true', 90)*/
 	User.findOne({ email: req.body.email})
 	.exec()
 	.then(user => {
@@ -73,7 +75,7 @@ exports.user_login = (req, res, next)=>{
 						email: user.email,
 						userId: user._id,
 						userName: user.name
-					}, process.env.JWT_KEY,
+					}, process.env.JWT_KEY || "secret",
 					{
 						expiresIn: "23h"
 					});

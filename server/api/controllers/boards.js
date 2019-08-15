@@ -20,7 +20,6 @@ exports.boards_get_all = (req, res, next) => {
 }
 
 exports.boards_create_board = (req, res, next) => {
-    console.log(req.params.userName)
    const board = new Board({
         _id: new mongoose.Types.ObjectId(),
         boardName: req.body.boardName,
@@ -48,6 +47,19 @@ exports.deleate_all_boards = (req, res, next) => {
         res.status(200).json({
             hi:  "hi"
             });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({error: err})
+        }); 
+    
+}
+
+exports.deleate_board = (req, res, next) => {
+    Board.deleteOne({_id: req.body.boardId})
+        .exec()
+        .then(doc => {
+        res.status(200).json(doc);
         })
         .catch(err => {
             console.log(err);

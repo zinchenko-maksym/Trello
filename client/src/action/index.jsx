@@ -31,7 +31,9 @@ export const authFailed = (payload) => {
 export const moveCard = (payload) => {
   return {type: "MOVE_CARD", payload}
 }
-
+export const deleteBoard = (payload) => {
+  return {type: "DELETE_BOARD", payload}
+}
 export const fetchSignUp = (data) => {
   return (dispatch) => {
     fetch('/user/signup', {
@@ -45,7 +47,7 @@ export const fetchSignUp = (data) => {
     .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{
-      window.location.href = "http://localhost:3000/boards"               //Change to url
+      window.location.href = "http://localhost:3000/boards"/*+cb.adressName*/              //Change to url
     })
     .catch((err)=>{
       console.log(err)
@@ -68,8 +70,6 @@ export const fetchLogIn = (data) => {
     .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{
-      
-      alert(cb)
       dispatch(authSuccess(cb));
       window.location.href = "http://localhost:3000/boards/"+ cb.adressName
     })
@@ -103,7 +103,7 @@ export const sendBoardToServer = (data) => {
   }
 };
 
-
+//boards
 export const requestBoardsList = (data) => {
   let adress= /boards\/([a-z1-9]+)/.exec(window.location.href) 
   console.log(`boardspage/${adress[1]}`)
@@ -118,7 +118,26 @@ export const requestBoardsList = (data) => {
     });
   }
 };
-
+export const deleteBoardRequest = (data) => {
+  let adress= "/boards"
+  console.log(`boardspage`)
+  return (dispatch) => {
+     fetch(`/boards/deleteBoard`, {
+      method: "DELETE",
+      headers:{
+        'Accept': 'application/json, text/plain',
+        'Content-type':'application/json',
+        /*'Authorization': `bearer ${localStorage.getItem("token")}`*/ 
+      },  
+      body: JSON.stringify(data)
+    })
+    .then((res)=>checkStatus(res))
+    .then((res)=>res.json())
+    .then((cb)=>{
+      return dispatch(deleteBoard({boardId: data.boardId}));
+    });
+  }
+};
 //List
 export const requestCardsAndLists = (data) => {
   let adress= /b\/([a-z1-9]+)/.exec(window.location.href) 
@@ -148,12 +167,11 @@ export const sendListToServer = (data) => {
     .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{
-      return 
+      return dispatch(addList(cb.list));
     });
   }
 };
 export const sendChangedList = (data) => {
-  console.log(data, 6)
   return (dispatch) => {  
     fetch('/b/updatecards', {
       method: "POST",
@@ -167,7 +185,7 @@ export const sendChangedList = (data) => {
     .then((res)=>checkStatus(res))
     .then((res)=>res.json())
     .then((cb)=>{
-      return 0
+      return 
     });
   }
 }

@@ -6,10 +6,13 @@ class AddList extends Component {
 	constructor(props)  {
     	super();
       this.state= {
-        nameOfList: ""
+        nameOfList: "",
+        isAddingList: false
       };
       this.handleListNameChange=this.handleListNameChange.bind(this);
       this.addList=this.addList.bind(this);
+      this.addingListMenu=this.addingListMenu.bind(this);
+      this.addingListStateChange=this.addingListStateChange.bind(this);
   	}
 
     addList(e){
@@ -19,19 +22,33 @@ class AddList extends Component {
         nameOfList: ""
      })
     }
+    this.addingListStateChange();
   }
-   handleListNameChange(e){
+  handleListNameChange(e){
      this.setState({nameOfList: e.target.value});
+  }
+  addingListStateChange(){
+    let oposit = !this.state.isAddingList
+     this.setState({isAddingList: oposit});
+  }
+  addingListMenu(){
+    if(!this.state.isAddingList){
+      return <div className="open-add-list lists-menu__item" onClick={this.addingListStateChange}>+ Add another list</div>
+    }else{  return <div  className="add-list lists-menu__item">
+            <input  type="text" placeholder="Enter list title..." value={this.state.nameOfList} onChange={this.handleListNameChange}/>
+            <div className="add-card-menu">
+              <button onClick={this.addList}>Add list</button>
+              <div className="cancel-button"  onClick={this.addingListStateChange}></div>
+            </div>
+      </div>
+    }
+
   }
   render() {
     return (
-	    <div  className="add-list lists-menu__item">
-          <p className="add-list__item add-list-title">Create new list...</p>
-          <div className="add-list__item">
-	    	    <input  type="text" value={this.state.nameOfList} onChange={this.handleListNameChange}/>
-            <button onClick={this.addList}>Submit</button>
-          </div>
-	    </div>
+	    <>
+          {this.addingListMenu()}
+	    </>
     );
   }
 }

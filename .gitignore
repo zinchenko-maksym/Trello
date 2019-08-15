@@ -7,7 +7,7 @@
 
 # testing
 /coverage
-
+/backend/nodemon.json
 # production
 /build
 

@@ -91,6 +91,7 @@ exports.add_list =(req, res, next) => {
     list
         .save()
         .then((result)=> {
+            console.log(result);
             res.status(201).json({
                 list: result
             });
@@ -142,30 +143,4 @@ exports.delete_card= (req, res, next) => {
         result.save();
         res.status(200).json(result);
     })
-    
-    /*Card.deleteOne({_id: req.body.cardId})
-        .exec()
-        .then(doc => {
-        res.status(200).json(doc);
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({error: err})
-        }); */
-    
-}
-/*exports.delete_all_cards= (req, res, next) => {
-    
-    Card.deleteMany({})
-        .exec()
-        .then(doc => {
-        res.status(200).json({
-            hi:  "hi"
-            });
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({error: err})
-        }); 
-    
-}*/
+  }

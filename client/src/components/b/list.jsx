@@ -32,7 +32,7 @@ function collect(connect, monitor) {
 	return {
 		connectDropTarget: connect.dropTarget(),
 		hovered: monitor.isOver(),
-		isOver: monitor.isOver(),
+		isOver: monitor.isOver(),	
 		isOverCurrent: monitor.isOver({ shallow: true }),
 		canDrop: monitor.canDrop(),
 		itemType: monitor.getItemType(),
@@ -95,7 +95,7 @@ class List extends Component {
 			console.log("delete item")
 		}
 	render() {
-		const { isOver, connectDropTarget } = this.props;
+		const {  connectDropTarget } = this.props;
 		
 		return connectDropTarget(
 				<div className="lists-menu__item list" >
