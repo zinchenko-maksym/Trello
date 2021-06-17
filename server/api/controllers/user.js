@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user')
 
 exports.user_get_users = (req, res, next)=>{
+
 	User.find({})
 		.exec()
 		.then((a)=>res.json(a))
@@ -55,7 +56,6 @@ exports.user_signup = (req, res, next) => {
 
 
 exports.user_login = (req, res, next)=>{
-	/*console.log(process.env.MONGO_ATLAS_PW, 'mongodb+srv://maklaut:'+process.env.MONGO_ATLAS_PW+'@trello-aktlt.mongodb.net/test?retryWrites=true', 90)*/
 	User.findOne({ email: req.body.email})
 	.exec()
 	.then(user => {
